@@ -1,6 +1,6 @@
 {
   "name": "@jsonstack/math",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "jsonstack math is a TypeScript module with solvers and helpers for math/linear algebra.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
