@@ -3,6 +3,7 @@ export type matrix = number[][];
 /**
  * Reduced Echelon Form Matrix
  * @see {https://github.com/substack/rref/blob/master/index.js}
+ * @note see https://www.npmjs.com/package/nyo for future
  */
 export function rref(A:matrix) {
   var rows = A.length;
