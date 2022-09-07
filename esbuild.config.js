@@ -10,7 +10,7 @@ const watch = (process.argv.includes('-w') || process.argv.includes('-watch'))
     }
   }
   : false;
-const globalName = 'JSONStackData';
+const globalName = 'JSONStackMath';
 const entryPoints = ['src/index.ts'];
 const webPlugins = [nodeBuiltIns(),brode()];
 const webCorePlugins = webPlugins.concat([
