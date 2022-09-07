@@ -1,0 +1,131 @@
+{
+  "name": "@jsonstack/math",
+  "version": "0.0.1",
+  "description": "jsonstack math is a TypeScript module with solvers and helpers for math/linear algebra.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "browser": "dist/web/index.js",
+  "web": "dist/web/web.js",
+  "modules.root": "dist/esm",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/repetere/jsonstack-math.git"
+  },
+  "author": {
+    "name": "Yaw Joseph Etse",
+    "email": "yaw.etse@gmail.com"
+  },
+  "keywords": [
+    "linear algebra",
+    "numpy"
+  ],
+  "bugs": {
+    "url": "https://github.com/repetere/jsonstack-math/issues"
+  },
+  "homepage": "https://github.com/repetere/jsonstack-math#readme",
+  "scripts": {
+    "dev": "node esbuild.config.js -w",
+    "esbuild": "node esbuild.config.js",
+    "benchmark": "node -r esm  benchmark/main_bmrk.js",
+    "test": "jest --coverage",
+    "doc": "tsc && typedoc && sitedown manual/ -b docs/manual",
+    "compile": "node esbuild.config.js",
+    "build": "tsc && typedoc && sitedown manual/ -b docs/manual",
+    "coverage": "coveralls"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@geut/esbuild-plugin-brode": "^2.0.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/jest": "^28.1.8",
+    "esbuild": "^0.14.47",
+    "esbuild-node-builtins": "^0.1.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.2",
+    "puppeteer": "^15.3.2",
+    "ts-jest": "^28.0.5",
+    "tslib": "^2.1.0",
+    "typedoc": "^0.23.7",
+    "typescript": "^4.7.4"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "extensionsToTreatAsEsm": [
+          ".ts",
+          ".js"
+        ],
+        "useESM": true,
+        "diagnostics": false,
+        "tsconfig": "tsconfig.jest.json"
+      }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/?!(scikitjs)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+        "path": "@semantic-release/git",
+        "assets": [
+          "package.json",
+          "package-lock.json",
+          "CHANGELOG.md"
+        ],
+        "message": "Release: ${nextRelease.version}\n\n${nextRelease.notes}"
+      }
+    ],
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "docs",
+              "scope": "README",
+              "release": "patch"
+            },
+            {
+              "type": "refactor",
+              "release": "major"
+            },
+            {
+              "type": "style",
+              "release": "patch"
+            }
+          ],
+          "parserOpts": {
+            "noteKeywords": [
+              "breaking",
+              "BREAKING CHANGE",
+              "BREAKING CHANGES"
+            ]
+          }
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/changelog"
+    ]
+  }
+}
