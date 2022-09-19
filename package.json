@@ -48,7 +48,7 @@
     "esbuild-node-builtins": "^0.1.0",
     "husky": "^8.0.1",
     "jest": "^28.1.2",
-    "puppeteer": "^17.1.2",
+    "puppeteer": "^18.0.0",
     "ts-jest": "^28.0.5",
     "tslib": "^2.1.0",
     "typedoc": "^0.23.7",
