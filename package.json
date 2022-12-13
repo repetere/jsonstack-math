@@ -43,6 +43,8 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
+    "@tensorflow/tfjs": "^4.1.0",
+    "@tensorflow/tfjs-node": "^4.1.0",
     "@types/jest": "^28.1.8",
     "esbuild": "^0.16.1",
     "esbuild-node-builtins": "^0.1.0",
