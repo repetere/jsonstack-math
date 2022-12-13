@@ -38,3 +38,11 @@ void function main(){
   console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -10 to 10: ${prettyPercent(invertibilty(10000,-10,10))}`);
   console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -50 to 50: ${prettyPercent(invertibilty(10000,-50,50))}`);
 }();
+
+describe('prettyPercent',()=>{
+    it('should throw an error if tensorflow has not been set',()=>{
+      expect(prettyPercent(0.43293)).toBe(
+        '43.29%'
+      );
+    });
+});
