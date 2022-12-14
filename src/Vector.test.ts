@@ -91,18 +91,81 @@ describe('Vector',()=>{
       expect(v_4.length()).toBeCloseTo(3.605);
     });
   });
-  describe('haveSameDirection',()=>{
+  describe('haveSameDirectionWith',()=>{
     it('should return true if the vectors have the same direction',()=>{
       const v_1 = new Vector([1,2,3]);
       const v_2 = new Vector([2,4,6]);
       const v_3 = new Vector([1,2,3]);
       const v_4 = new Vector([-1,-2,-3]);
-      expect(v_1.haveSameDirection(v_2)).toBe(true);
-      expect(v_1.haveSameDirection(v_3)).toBe(true);
-      expect(v_1.haveSameDirection(v_4)).toBe(false);
+      expect(v_1.haveSameDirectionWith(v_2)).toBe(true);
+      expect(v_1.haveSameDirectionWith(v_3)).toBe(true);
+      expect(v_1.haveSameDirectionWith(v_4)).toBe(false);
       const a = new Vector([2,4]);
       const b = new Vector([4,8]);
-      expect(a.haveSameDirection(b)).toBe(true);
+      expect(a.haveSameDirectionWith(b)).toBe(true);
+    });
+  });
+  describe('haveOppositeDirectionTo',()=>{
+    it('should return true if the vectors have the opposite direction',()=>{
+      const v_1 = new Vector([1,2,3]);
+      const v_2 = new Vector([2,4,6]);
+      const v_3 = new Vector([1,2,3]);
+      const v_4 = new Vector([-1,-2,-3]);
+      expect(v_1.haveOppositeDirectionTo(v_2)).toBe(false);
+      expect(v_1.haveOppositeDirectionTo(v_3)).toBe(false);
+      expect(v_1.haveOppositeDirectionTo(v_4)).toBe(true);
+      expect(v_1.haveOppositeDirectionTo(v_4)).toBe(true);
+      expect(new Vector([2,4]).haveOppositeDirectionTo(new Vector([4,8]))).toBe(false);
+      expect(new Vector([2,4]).haveOppositeDirectionTo(new Vector([-4,-8]))).toBe(true);
+    });
+  });
+  describe('isPerpendicularTo',()=>{
+    it('should return true if the vectors are perpendicular',()=>{
+      expect(new Vector([2,4]).isPerpendicularTo(new Vector([4,8]))).toBe(false);
+      expect(new Vector([2,2]).isPerpendicularTo(new Vector([-2,2]))).toBe(true);
+    });
+  });
+  describe('crossProduct',()=>{
+    it('should return the cross product of two vectors',()=>{
+      const a = new Vector([2,1,1]);
+      const b = new Vector([1,2,2]);
+      expect(a.crossProduct(b).get()).toEqual([0,-3,3]);
+      expect(b.crossProduct(a).get()).toEqual([0,3,-3]);
+    });
+  });
+  describe('angleBetween',()=>{ 
+    it('should return the angle between two vectors',()=>{
+      const a = new Vector([0,4]);
+      const b = new Vector([4,4]);
+      expect(a.angleBetween(b)).toBeCloseTo(45);
+    });
+  });
+  describe('negate',()=>{
+    it('should return the negated vector',()=>{
+      const v = new Vector([1,2,3]);
+      expect(v.negate().get()).toEqual([-1,-2,-3]);
+    });
+  });
+  describe('projectOn',()=>{
+    it('should return the projection of the vector on another vector',()=>{
+      const a = new Vector([8,4]);
+      const b = new Vector([4,7]);
+      expect(b.projectOn(a).get()).toEqual([6,3]);
+    });
+  });
+  describe('withLength',()=>{
+    it('should return the vector with the given length',()=>{
+      const v = new Vector([2,3]);
+      expect(v.withLength(10).length()).toEqual(10);
+    });
+  });
+  describe('equalTo',()=>{ 
+    it('should return true if the vectors are equal',()=>{
+      const v_1 = new Vector([1,2,3]);
+      const v_2 = new Vector([1,2,3]);
+      const v_3 = new Vector([1,2,4]);
+      expect(v_1.equalTo(v_2)).toBe(true);
+      expect(v_1.equalTo(v_3)).toBe(false);
     });
   });
   describe('get',()=>{
