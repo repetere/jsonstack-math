@@ -3,7 +3,8 @@ import * as tf from '@tensorflow/tfjs-node';
 import {EPSILON, areEqual, toDegrees} from './util';
 
 export class Vector{
-  constructor(components:number[]){
+  components: tf.Tensor;
+  constructor(components:number[]|tf.Tensor){
     // this.tf = getBackend();
     this.components = Array.isArray(components)
       ? tf.tensor1d(components)
@@ -38,7 +39,7 @@ export class Vector{
    * @returns the length of the vector
    */
   length():number{
-    return this.components.norm().arraySync();
+    return this.components.norm().arraySync() as number;
   }
   /**
    * @description returns the dot product of the current vector and the vector passed in as an argument
@@ -46,7 +47,7 @@ export class Vector{
    * @returns 
    */
   dotProduct(vector:Vector):number{
-    return this.components.dot(vector.components).arraySync();
+    return this.components.dot(vector.components).arraySync() as number;
   }
   /**
    * @description returns a new vector with the same direction as the current vector but with a length of 1
@@ -154,6 +155,6 @@ export class Vector{
    * @returns the components of the vector as an array
    */
   get():number[]{
-    return this.components.arraySync();
+    return this.components.arraySync() as number[];
   }
 }

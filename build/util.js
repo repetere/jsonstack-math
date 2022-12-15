@@ -38,5 +38,5 @@
 // };
 export const EPSILON = 1e-6;
 export const areEqual = (a, b) => Math.abs(a - b) < EPSILON;
-export const toDegrees = radians => (radians * 180) / Math.PI;
-export const toRadians = degrees => (degrees * Math.PI) / 180;
+export const toDegrees = (radians) => (radians * 180) / Math.PI;
+export const toRadians = (degrees) => (degrees * Math.PI) / 180;

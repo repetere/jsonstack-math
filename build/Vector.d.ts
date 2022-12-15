@@ -1,5 +1,7 @@
+import * as tf from '@tensorflow/tfjs-node';
 export declare class Vector {
-    constructor(components: number[]);
+    components: tf.Tensor;
+    constructor(components: number[] | tf.Tensor);
     /**
      * @description returns a new vector that is the current vector plus the vector passed in as an argument
      * @param components

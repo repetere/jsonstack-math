@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs-node';
 import { areEqual, toDegrees } from './util';
 export class Vector {
+    components;
     constructor(components) {
         // this.tf = getBackend();
         this.components = Array.isArray(components)

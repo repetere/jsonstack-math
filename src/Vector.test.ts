@@ -1,6 +1,6 @@
 import { getBackend, setBackend, } from "./tensorflow_singleton";
 import * as tf from '@tensorflow/tfjs-node';
-import { Vector } from "./vector";
+import { Vector } from "./Vector";
 
 describe('Vector',()=>{
   describe('constructor',()=>{
