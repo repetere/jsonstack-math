@@ -1,6 +1,4 @@
-export declare type matrix = number[][];
-/**
- * Reduced Echelon Form Matrix
- * @see {https://github.com/substack/rref/blob/master/index.js}
- */
-export declare function rref(A: matrix): matrix | undefined;
+export declare const EPSILON = 0.000001;
+export declare const areEqual: (a: number, b: number) => boolean;
+export declare const toDegrees: (radians: any) => number;
+export declare const toRadians: (degrees: any) => number;
