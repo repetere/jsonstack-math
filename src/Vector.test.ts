@@ -1,6 +1,7 @@
 import { getBackend, setBackend, } from "./tensorflow_singleton";
 import * as tf from '@tensorflow/tfjs-node';
 import { Vector } from "./Vector";
+import { Matrix } from "./Matrix";
 
 describe('Vector',()=>{
   describe('constructor',()=>{
@@ -166,6 +167,13 @@ describe('Vector',()=>{
       const v_3 = new Vector([1,2,4]);
       expect(v_1.equalTo(v_2)).toBe(true);
       expect(v_1.equalTo(v_3)).toBe(false);
+    });
+  });
+  describe('transform',()=>{
+    it('should return the transformed vector',()=>{
+      const m = new Matrix([[1,2],[3,4]]);
+      const v = new Vector([3,5]);
+      expect(v.transform(m).get()).toEqual([18,26]);
     });
   });
   describe('get',()=>{

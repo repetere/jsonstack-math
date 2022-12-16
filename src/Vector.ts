@@ -1,9 +1,23 @@
 import { getBackend, setBackend, } from "./tensorflow_singleton";
 import * as tf from '@tensorflow/tfjs-node';
 import {EPSILON, areEqual, toDegrees} from './util';
+import {Matrix} from './Matrix';
 
+/**
+ * @description a vector class that uses tensorflow tensors to represent vectors
+ * @export  Vector
+ * @class Vector
+ * @property {tf.Tensor} components - the components of the vector 
+ */
 export class Vector{
+  /**
+   * @description the components of the vector
+   */
   components: tf.Tensor;
+  /**
+   * @description creates an instance of Vector.
+   * @param {number[]|tf.Tensor} components - the components of the vector
+   */
   constructor(components:number[]|tf.Tensor){
     // this.tf = getBackend();
     this.components = Array.isArray(components)
@@ -149,6 +163,16 @@ export class Vector{
    */
   equalTo(vector:Vector):boolean{
     return tf.equal(this.components,vector.components).all().arraySync()===1;
+  }
+  /**
+   * @description returns a new vector that is the current vector transformed by the matrix passed in as an argument
+   * @param matrix 
+   * @returns a new vector that is the current vector transformed by the matrix passed in as an argument
+   */
+  transform(matrix:Matrix):Matrix{
+    const [ matrixRows, matrixColumns ] = matrix.elements.shape;
+    const vectorMatrix = this.components.reshape([ 1, matrixRows ]);
+    return new Vector(vectorMatrix.matMul(matrix.elements).reshape([ matrixRows ]));
   }
   /**
    * @description returns the components of the vector as an array

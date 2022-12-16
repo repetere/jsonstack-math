@@ -152,4 +152,28 @@ console.log(one.length())
 const modified = one.withLength(10)
 // 10
 console.log({modified},modified.length())
+
+
+get columns from a matrix:
+const x = tf.tensor([
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]);
+​
+//x.slice([0,3],[3,1]).print();
+​
+tf.unstack(x,1).forEach(tensor => tensor.print());
+​
+​
+Tensor
+    [1, 5, 9]
+Tensor
+    [2, 6, 10]
+Tensor
+    [3, 7, 11]
+Tensor
+    [4, 8, 12]
+EditRun
+
 */
