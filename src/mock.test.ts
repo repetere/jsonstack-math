@@ -34,9 +34,9 @@ function prettyPercent(num:number):string{
 }
 
 void function main(){
-  console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -5 to 5: ${prettyPercent(invertibilty(10000,-5,5))}`);
-  console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -10 to 10: ${prettyPercent(invertibilty(10000,-10,10))}`);
-  console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -50 to 50: ${prettyPercent(invertibilty(10000,-50,50))}`);
+  //console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -5 to 5: ${prettyPercent(invertibilty(10000,-5,5))}`);
+  //console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -10 to 10: ${prettyPercent(invertibilty(10000,-10,10))}`);
+  //console.log(`Percentage of Invertible 2x2 matrices, with intergers ranging from -50 to 50: ${prettyPercent(invertibilty(10000,-50,50))}`);
 }();
 
 describe('prettyPercent',()=>{
