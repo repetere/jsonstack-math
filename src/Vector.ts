@@ -169,7 +169,7 @@ export class Vector{
    * @param matrix 
    * @returns a new vector that is the current vector transformed by the matrix passed in as an argument
    */
-  transform(matrix:Matrix):Matrix{
+  transform(matrix:Matrix):Vector{
     const [ matrixRows, matrixColumns ] = matrix.elements.shape;
     const vectorMatrix = this.components.reshape([ 1, matrixRows ]);
     return new Vector(vectorMatrix.matMul(matrix.elements).reshape([ matrixRows ]));

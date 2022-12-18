@@ -1,6 +1,20 @@
 import * as tf from '@tensorflow/tfjs-node';
+import { Matrix } from './Matrix';
+/**
+ * @description a vector class that uses tensorflow tensors to represent vectors
+ * @export  Vector
+ * @class Vector
+ * @property {tf.Tensor} components - the components of the vector
+ */
 export declare class Vector {
+    /**
+     * @description the components of the vector
+     */
     components: tf.Tensor;
+    /**
+     * @description creates an instance of Vector.
+     * @param {number[]|tf.Tensor} components - the components of the vector
+     */
     constructor(components: number[] | tf.Tensor);
     /**
      * @description returns a new vector that is the current vector plus the vector passed in as an argument
@@ -96,6 +110,12 @@ export declare class Vector {
      * @returns true if the current vector and the vector passed in as an argument are equal
      */
     equalTo(vector: Vector): boolean;
+    /**
+     * @description returns a new vector that is the current vector transformed by the matrix passed in as an argument
+     * @param matrix
+     * @returns a new vector that is the current vector transformed by the matrix passed in as an argument
+     */
+    transform(matrix: Matrix): Vector;
     /**
      * @description returns the components of the vector as an array
      * @returns the components of the vector as an array

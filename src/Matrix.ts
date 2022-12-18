@@ -9,12 +9,12 @@ import {Vector} from './Vector';
  * @property {tf.Tensor} elements - the elements of the matrix
  */
 export class Matrix{
-  elements: tf.Tensor;
+  elements: tf.Tensor2D;
   /**
    * @description creates an instance of Matrix.
    * @param elements 
    */
-  constructor(elements:number[][]|tf.Tensor){
+  constructor(elements:number[][]|tf.Tensor2D){
     this.elements = Array.isArray(elements)
       ? tf.tensor2d(elements)
       : elements;
@@ -25,17 +25,17 @@ export class Matrix{
    * @param column 
    * @returns the rows of the matrix 
    */
-  rows(row?:number,column?:number):number[]|number{
-    if(column!==undefined) return this.elements.slice(row,1).arraySync()[0][column];
-    else if(row!==undefined) return this.elements.slice(row,1).arraySync()[0];
-    else return this.elements.arraySync();
+  rows(row?:number,column?:number):number[][]|number[]|number{
+    if(column!==undefined) return this.elements.slice(row,1).arraySync()[0][column] as number;
+    else if(row!==undefined) return this.elements.slice(row,1).arraySync()[0] as number[];
+    else return this.elements.arraySync() as number[][];
   }
   /**
    * @description returns the column of the matrix
    * @param column 
    * @returns the column of the matrix 
    */
-  column(column:number):number[]{
+  column(column:number):Vector{
     return new Vector(this.elements.transpose().unstack()[column]);
   }
   /**
@@ -51,6 +51,6 @@ export class Matrix{
    * @returns the matrix
    */
   get():number[][]{
-    return this.rows();
+    return this.rows() as number[][];
   }
 }
