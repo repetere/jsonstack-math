@@ -24,8 +24,7 @@ export class Matrix {
      * @returns the rows of the matrix
      */
     rows(row, column) {
-        console.log({ row, column });
-        if (column !== undefined)
+        if (column !== undefined && row !== undefined)
             return this.elements.slice(row, 1).arraySync()[0][column];
         else if (row !== undefined)
             return this.elements.slice(row, 1).arraySync()[0];

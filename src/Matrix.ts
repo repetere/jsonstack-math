@@ -9,12 +9,12 @@ import {Vector} from './Vector';
  * @property {tf.Tensor} elements - the elements of the matrix
  */
 export class Matrix{
-  elements: tf.Tensor2D;
+  elements: tf.Tensor;
   /**
    * @description creates an instance of Matrix.
    * @param elements 
    */
-  constructor(elements:number[][]|tf.Tensor2D){
+  constructor(elements:number[][]|tf.Tensor){
     this.elements = Array.isArray(elements)
       ? tf.tensor2d(elements)
       : elements;
@@ -26,8 +26,8 @@ export class Matrix{
    * @returns the rows of the matrix 
    */
   rows(row?:number,column?:number):number[][]|number[]|number{
-    if(column!==undefined) return this.elements.slice(row,1).arraySync()[0][column] as number;
-    else if(row!==undefined) return this.elements.slice(row,1).arraySync()[0] as number[];
+    if(column!==undefined && row!==undefined) return (this.elements as tf.Tensor2D).slice(row,1).arraySync()[0][column] as number;
+    else if(row!==undefined) return (this.elements as tf.Tensor2D).slice(row,1).arraySync()[0] as number[];
     else return this.elements.arraySync() as number[][];
   }
   /**

@@ -7,12 +7,12 @@ import { Vector } from './Vector';
  * @property {tf.Tensor} elements - the elements of the matrix
  */
 export declare class Matrix {
-    elements: tf.Tensor2D;
+    elements: tf.Tensor;
     /**
      * @description creates an instance of Matrix.
      * @param elements
      */
-    constructor(elements: number[][] | tf.Tensor2D);
+    constructor(elements: number[][] | tf.Tensor);
     /**
      * @description returns the rows of the matrix
      * @param row
