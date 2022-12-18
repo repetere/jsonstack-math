@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/repetere/jsonstack-math/compare/v1.2.0...v1.3.0) (2022-12-18)
+
+
+### Bug Fixes
+
+* fixed mateix imports ([54876b1](https://github.com/repetere/jsonstack-math/commit/54876b174ec31946ce2a05a3f78afbdb4c85ef9a))
+* type errors ([9ef119d](https://github.com/repetere/jsonstack-math/commit/9ef119da5d55625fad17fd641e081eeedf89c6b6))
+* typing corrections ([b1c5bd1](https://github.com/repetere/jsonstack-math/commit/b1c5bd195c44426611650ce4f799a2f7c36868b4))
+
+
+### Features
+
+* added matrix and linear transformations ([d47ea35](https://github.com/repetere/jsonstack-math/commit/d47ea352e85e1287d7f7e7c3c819fd9cd312482b))
+
 # [1.2.0](https://github.com/repetere/jsonstack-math/compare/v1.1.0...v1.2.0) (2022-12-15)
 
 
