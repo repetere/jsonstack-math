@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/repetere/jsonstack-math/compare/v1.3.0...v1.4.0) (2022-12-21)
+
+
+### Features
+
+* added basic matrix operations ([25472f6](https://github.com/repetere/jsonstack-math/commit/25472f6806aad387e4db54091184560fc10938a9))
+
 # [1.3.0](https://github.com/repetere/jsonstack-math/compare/v1.2.0...v1.3.0) (2022-12-18)
 
 
