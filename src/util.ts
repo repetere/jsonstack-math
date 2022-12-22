@@ -46,3 +46,4 @@ export const EPSILON = 1e-6;
 export const areEqual = (a:number,b:number):boolean=>Math.abs(a-b)<EPSILON;
 export const toDegrees = (radians:number) => (radians * 180) / Math.PI;
 export const toRadians = (degrees:number) => (degrees * Math.PI) / 180;
+export const sum = (arr:number[])=>arr.reduce((a,b)=>a+b,0);

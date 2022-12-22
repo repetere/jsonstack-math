@@ -72,12 +72,57 @@ describe('Matrix',()=>{
       expect(b.get()).toEqual([[2,4],[6,8]]);
     });
   });
-  describe('multiplu',()=>{
+  describe('multiply',()=>{
     it('should transform the matrix',()=>{
       const m = new Matrix([[1,2],[3,4]]);
       const m_t = new Matrix([[-1,0],[0,1]]);
       const m_1 = m_t.multiply(m);
       expect(m_1.get()).toEqual([[-1,-2],[3,4]]);
+    });
+  });
+  describe('transpose',()=>{  
+    it('should transpose the matrix',()=>{
+      const m = new Matrix([[1,2],[3,4]]);
+      const m_t = m.transpose();
+      expect(m_t.get()).toEqual([[1,3],[2,4]]);
+    });
+  });
+  describe('determinant',()=>{
+    it('should return error for non square matrices',()=>{
+      const m = new Matrix([[1,2],[3,4],[5,6]]);
+      expect(()=>m.determinant()).toThrow();
+    });
+    it('should return the determinant of a 1x1 matrix',()=>{ 
+      const m = new Matrix([[1]]);
+      expect(m.determinant()).toEqual(1);
+    });
+    it('should return the determinant of a 2x2 matrix',()=>{
+      const m = new Matrix([
+        [ 0, 3],
+        [-2, 1]
+      ]);
+      expect(m.determinant()).toEqual(6);
+    });
+    it('should return the determinant of a nxn matrix',()=>{
+      const m = new Matrix([
+        [ 1, 2, 3],
+        [-1, 2, 3],
+        [ 1, 1, 1]
+      ]);
+      const m2 = new Matrix([
+        [2, -3,  1],
+        [2,  0, -1],
+        [1,  4,  5]
+      ]);
+      const m3 = new Matrix([
+        [3, 0, 2, -1],
+        [1, 2, 0, -2],
+        [4, 0, 6, -3],
+        [5, 0, 2,  0]
+      ]);
+      expect(m.determinant()).toEqual(-2);
+      expect(m2.determinant()).toEqual(49);
+      expect(m3.determinant()).toEqual(20);
     });
   });
   describe('get',()=>{

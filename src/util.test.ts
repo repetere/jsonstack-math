@@ -49,6 +49,12 @@ describe('util', function () {
       expect(util.toRadians(90)).toBe(Math.PI / 2);
     });
   });
+  describe('sum', () => {
+    it('should return the sum of the input array', () => {
+      expect(util.sum([1, 2, 3, 4])).toBe(10);
+      expect(util.sum([1, 2, 3, 4, 5])).toBe(15);
+    });
+  });
 });
 
 /*
