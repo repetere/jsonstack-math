@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/repetere/jsonstack-math/compare/v1.5.0...v1.6.0) (2022-12-27)
+
+
+### Features
+
+* adding zeros, ones, empty, vstack and hstack vectors ([09af00f](https://github.com/repetere/jsonstack-math/commit/09af00fb3265fd90e359c32dd5a91e55bf3cc9c9))
+
 # [1.5.0](https://github.com/repetere/jsonstack-math/compare/v1.4.0...v1.5.0) (2022-12-27)
 
 
