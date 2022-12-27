@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/repetere/jsonstack-math/compare/v1.4.0...v1.5.0) (2022-12-27)
+
+
+### Bug Fixes
+
+* matrix function types ([3a623e0](https://github.com/repetere/jsonstack-math/commit/3a623e05333e29f5fa00eed3da4affc4e8751543))
+
+
+### Features
+
+* transpose and determinants ([485880f](https://github.com/repetere/jsonstack-math/commit/485880f02162484526d533a046c378825984bf40))
+
 # [1.4.0](https://github.com/repetere/jsonstack-math/compare/v1.3.0...v1.4.0) (2022-12-21)
 
 
