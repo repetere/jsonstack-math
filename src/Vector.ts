@@ -10,6 +10,53 @@ import {Matrix} from './Matrix';
  * @property {tf.Tensor} components - the components of the vector 
  */
 export class Vector{
+
+  /**
+   * @description returns a new random vector
+   * @param input 
+   * @returns a new random vector
+   */
+  static empty(input:number|Vector):Vector{
+    return input instanceof Vector 
+      ? new Vector(tf.randomUniform(input.components.shape))
+      : new Vector(tf.randomUniform([input]));
+  }
+  /**
+   * @description returns a new zero vector
+   * @param input 
+   * @returns a new zero vector
+   */
+  static zeros(input:number|Vector):Vector{
+    return input instanceof Vector 
+      ? new Vector(tf.zerosLike(input.components))
+      : new Vector(tf.zeros([input]));
+  }
+  /**
+   * @description returns a new vector of ones
+   * @param input 
+   * @returns a new vector of ones
+   */
+  static ones(input:number|Vector):Vector{
+    return input instanceof Vector 
+      ? new Vector(tf.onesLike(input.components))
+      : new Vector(tf.ones([input]));
+  }
+  /**
+   * returns a matrix of combined vectors 
+   * @param vectors 
+   * @returns a matrix of combined vectors
+   */
+  static vstack(...vectors:Vector[]):Matrix{
+    return new Matrix(tf.stack(vectors.map(v=>v.components)));
+  }
+  /**
+   * 
+   * @param vectors 
+   * @returns 
+   */
+  static hstack(...vectors:Vector[]):Vector{
+    return new Vector(tf.concat(vectors.map(v=>v.components),0));
+  }
   /**
    * @description the components of the vector
    */
@@ -174,6 +221,7 @@ export class Vector{
     const vectorMatrix = this.components.reshape([ 1, matrixRows ]);
     return new Vector(vectorMatrix.matMul(matrix.elements).reshape([ matrixRows ]));
   }
+  
   /**
    * @description returns the components of the vector as an array
    * @returns the components of the vector as an array

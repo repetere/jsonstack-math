@@ -176,6 +176,51 @@ describe('Vector',()=>{
       expect(v.transform(m).get()).toEqual([18,26]);
     });
   });
+  describe('static empty',()=>{
+    it('should return an empty vector',()=>{
+      const v = new Vector([1,2,3]);
+      const ev = Vector.empty(v);
+      const er = Vector.empty(4);
+      expect(ev.get().length).toEqual(3);
+      expect(er.get().length).toEqual(4);
+    });
+  });
+  describe('static zeros',()=>{
+    it('should return a zero vector',()=>{
+      const v = new Vector([1,2,3]);
+      const ev = Vector.zeros(v);
+      const er = Vector.zeros(4);
+      expect(er.get().length).toEqual(4);
+      expect(er.get()).toEqual([0,0,0,0]);
+      expect(ev.get().length).toEqual(3);
+      expect(ev.get()).toEqual([0,0,0]);
+    });
+  });
+  describe('static ones',()=>{
+    it('should return a vector of ones',()=>{
+      const v = new Vector([1,2,3]);
+      const ev = Vector.ones(v);
+      const er = Vector.ones(4);
+      expect(er.get().length).toEqual(4);
+      expect(er.get()).toEqual([1,1,1,1]);
+      expect(ev.get().length).toEqual(3);
+      expect(ev.get()).toEqual([1,1,1]);
+    });
+  });
+  describe('vstack',()=>{
+    it('should return a vector with the given vector appended to the end',()=>{
+      const v = new Vector([1,2,3]);
+      const v2 = new Vector([4,5,6]);
+      expect(Vector.vstack(v,v2).get()).toEqual([[1,2,3],[4,5,6]]);
+    });
+  });
+  describe('hstack',()=>{
+    it('should return a vector with the given vector appended to the end',()=>{
+      const v = new Vector([1,2,3]);
+      const v2 = new Vector([4,5,6]);
+      expect(Vector.hstack(v,v2).get()).toEqual([1,2,3,4,5,6]);
+    });
+  });
   describe('get',()=>{
     it('should return the components of the vector',()=>{
       const v = new Vector([1,2,3]);
