@@ -97,18 +97,18 @@ export class Matrix{
     return new Matrix(this.elements.transpose());
   }
   determinant():number{
-    const rowLength = this.rows().length;
-    if (rowLength !== this.rows(0).length) {
+    const rowLength = (this.rows() as number[][]).length;
+    if (rowLength !== (this.rows(0) as number[]).length) {
       throw new Error('Only matrices with the same number of rows and columns are supported.')
     }
     if (rowLength === 1) {
-      return this.rows(0,0);
+      return this.rows(0,0) as number;
     } else if (rowLength === 2) {
-      return this.rows(0,0) * this.rows(1,1) - this.rows(0,1) * this.rows(1,0);
+      return ((this.rows(0,0) as number) * (this.rows(1,1) as number) - (this.rows(0,1) as number) * (this.rows(1,0) as number)) as number;
     }
 
-    const parts = this.rows(0).map((coef, index) => {
-      const matrixRows = this.rows().slice(1).map(row => [ ...row.slice(0, index), ...row.slice(index + 1)])
+    const parts = (this.rows(0) as number[]).map((coef, index) => {
+      const matrixRows = (this.rows() as number[][]).slice(1).map(row => [ ...row.slice(0, index), ...row.slice(index + 1)])
       const matrix = new Matrix(matrixRows)
       const result = coef * matrix.determinant()
       return index % 2 === 0 ? result : -result
