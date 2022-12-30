@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/repetere/jsonstack-math/compare/v1.6.0...v1.7.0) (2022-12-30)
+
+
+### Features
+
+* added zeros, empty, ones matrix ([aa84904](https://github.com/repetere/jsonstack-math/commit/aa84904ab2be9cc8ed5635d46c4a955fbc1fcdd0))
+
 # [1.6.0](https://github.com/repetere/jsonstack-math/compare/v1.5.0...v1.6.0) (2022-12-27)
 
 
