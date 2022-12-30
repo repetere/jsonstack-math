@@ -17,6 +17,36 @@ export class Matrix{
     columns: number;
   };
   /**
+   * @description returns a new random matrix
+   * @param input 
+   * @returns a new random matrix
+   */
+  static empty(input:number|Matrix,inputColumns?:number):Matrix{
+    return input instanceof Matrix 
+      ? new Matrix(tf.randomUniform(input.elements.shape))
+      : new Matrix(tf.randomUniform([input,inputColumns as number]));
+  }
+  /**
+   * @description returns a new zero matrix
+   * @param input 
+   * @returns a new zero matrix
+   */
+  static zeros(input:number|Matrix,inputColumns?:number):Matrix{
+    return input instanceof Matrix 
+      ? new Matrix(tf.zerosLike(input.elements))
+      : new Matrix(tf.zeros([input,inputColumns as number]));
+  }
+  /**
+   * @description returns a new ones matrix
+   * @param input 
+   * @returns a new ones matrix
+   */
+    static ones(input:number|Matrix,inputColumns?:number):Matrix{
+      return input instanceof Matrix 
+        ? new Matrix(tf.onesLike(input.elements))
+        : new Matrix(tf.ones([input,inputColumns as number]));
+    }
+  /**
    * @description creates an instance of Matrix.
    * @param elements 
    */

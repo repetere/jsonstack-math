@@ -125,6 +125,37 @@ describe('Matrix',()=>{
       expect(m3.determinant()).toEqual(20);
     });
   });
+  describe('static empty',()=>{
+    it('should return an empty matrix',()=>{
+      const e = Matrix.empty(2,2);
+      const m = new Matrix([[2,2],[3,3]]);
+      const em = Matrix.empty(m);
+      expect(e.shape).toMatchObject([2,2]);
+      expect(em.shape).toMatchObject([2,2]);
+    });
+  });
+  describe('static zeros',()=>{
+    it('should return a zero vector',()=>{
+      const v = new Matrix([[2,2],[3,3]]);
+      const ev = Matrix.zeros(v);
+      const er = Matrix.zeros(3,3);
+      expect(er.get().length).toEqual(3);
+      expect(er.get()).toMatchObject([[0,0,0],[0,0,0],[0,0,0]]);
+      expect(ev.get()).toMatchObject([[0,0],[0,0]]);
+      expect(ev.get().length).toEqual(2);
+    });
+  });
+  describe('static ones',()=>{
+    it('should return a one vector',()=>{
+      const v = new Matrix([[2,2],[3,3]]);
+      const ev = Matrix.ones(v);
+      const er = Matrix.ones(3,3);
+      expect(er.get().length).toEqual(3);
+      expect(er.get()).toMatchObject([[1,1,1],[1,1,1],[1,1,1]]);
+      expect(ev.get()).toMatchObject([[1,1],[1,1]]);
+      expect(ev.get().length).toEqual(2);
+    });
+  });
   describe('get',()=>{
     it('should return the matrix',()=>{
       const m = new Matrix([[1,2],[3,4]]);

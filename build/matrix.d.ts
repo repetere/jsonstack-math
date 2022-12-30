@@ -8,6 +8,11 @@ import { Vector } from './Vector';
  */
 export declare class Matrix {
     elements: tf.Tensor;
+    shape: number[];
+    properties: {
+        rows: number;
+        columns: number;
+    };
     /**
      * @description creates an instance of Matrix.
      * @param elements
@@ -32,6 +37,36 @@ export declare class Matrix {
      * @returns a transformed matrix
      */
     transform(matrix: Matrix): Matrix;
+    /**
+     * @description returns sum of two matrices
+     * @param matrix
+     * @returns sum of two matrices
+     */
+    add(matrix: Matrix): Matrix;
+    /**
+     * @description returns the difference of two matrices
+     * @param matrix
+     * @returns the difference of two matrices
+    */
+    subtract(matrix: Matrix): Matrix;
+    /**
+     * @description returns the matrix scaled by the scalar passed in as an argument
+     * @param scalar
+     * @returns the matrix scaled by the scalar passed in as an argument
+     */
+    scaleBy(scalar: number): Matrix;
+    /**
+     * @description returns the matrix
+     * @param matrix
+     * @returns the matrix
+     */
+    multiply(matrix: Matrix): Matrix;
+    /**
+     * @description returns the transpose of the matrix
+     * @returns the transpose of the matrix
+     */
+    transpose(): Matrix;
+    determinant(): number;
     /**
      * @description returns the matrix
      * @returns the matrix
