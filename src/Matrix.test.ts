@@ -156,6 +156,35 @@ describe('Matrix',()=>{
       expect(ev.get().length).toEqual(2);
     });
   });
+  describe('diagonal',()=>{
+    it('should return the diagonal of the matrix',()=>{
+      const m = new Matrix([
+        [1,2],
+        [3,4]
+      ]);
+      const d = m.diagonal();
+      expect(d.get()).toMatchObject([1,4]);
+    });
+    it('should return the diagonal of a non square matrix',()=>{
+      const A = new Matrix([
+        [1, 2, 3, 4], 
+        [5, 6,7,8],
+        [9,10,11,12]
+      ]);
+      const d = A.diagonal();
+      expect(d.get()).toMatchObject([1,6,11]);
+    });
+  });
+  describe('trace',()=>{
+    it('should return the trace of the matrix',()=>{
+      const m = new Matrix([
+        [1,2],
+        [3,4]
+      ]);
+      const t = m.trace();
+      expect(t).toEqual(5);
+    });
+  })
   describe('get',()=>{
     it('should return the matrix',()=>{
       const m = new Matrix([[1,2],[3,4]]);

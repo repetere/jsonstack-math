@@ -126,6 +126,10 @@ export class Matrix{
   transpose():Matrix{
     return new Matrix(this.elements.transpose());
   }
+  /**
+   * @description returns the inverse of the matrix
+   * @returns the determinant of the matrix
+   */
   determinant():number{
     const rowLength = (this.rows() as number[][]).length;
     if (rowLength !== (this.rows(0) as number[]).length) {
@@ -145,6 +149,25 @@ export class Matrix{
     })
 
     return sum(parts);
+  }
+  /**
+   * @description returns the main diagonal of the matrix
+   * @returns the main diagonal of the matrix
+   */
+  diagonal():Vector{
+    return tf.tidy(() => {      
+      const diagonalElements = tf.unstack(this.elements).map((tensor,i) => {
+        return tensor.slice([i],[1]);
+      });
+      return new Vector(tf.concat(diagonalElements));
+   });
+  }
+  /** 
+   * @description returns the trace of the matrix
+   * @returns the trace of the matrix
+  */
+  trace():number{
+    return this.diagonal().components.sum().dataSync()[0];
   }
   /**
    * @description returns the matrix
