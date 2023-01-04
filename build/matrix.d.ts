@@ -14,6 +14,24 @@ export declare class Matrix {
         columns: number;
     };
     /**
+     * @description returns a new random matrix
+     * @param input
+     * @returns a new random matrix
+     */
+    static empty(input: number | Matrix, inputColumns?: number): Matrix;
+    /**
+     * @description returns a new zero matrix
+     * @param input
+     * @returns a new zero matrix
+     */
+    static zeros(input: number | Matrix, inputColumns?: number): Matrix;
+    /**
+     * @description returns a new ones matrix
+     * @param input
+     * @returns a new ones matrix
+     */
+    static ones(input: number | Matrix, inputColumns?: number): Matrix;
+    /**
      * @description creates an instance of Matrix.
      * @param elements
      */
@@ -66,7 +84,21 @@ export declare class Matrix {
      * @returns the transpose of the matrix
      */
     transpose(): Matrix;
+    /**
+     * @description returns the inverse of the matrix
+     * @returns the determinant of the matrix
+     */
     determinant(): number;
+    /**
+     * @description returns the main diagonal of the matrix
+     * @returns the main diagonal of the matrix
+     */
+    diagonal(): Vector;
+    /**
+     * @description returns the trace of the matrix
+     * @returns the trace of the matrix
+    */
+    trace(): number;
     /**
      * @description returns the matrix
      * @returns the matrix

@@ -1,5 +1,6 @@
 import * as tf from '@tensorflow/tfjs-node';
 import { areEqual, toDegrees } from './util';
+import { Matrix } from './Matrix';
 /**
  * @description a vector class that uses tensorflow tensors to represent vectors
  * @export  Vector
@@ -7,6 +8,52 @@ import { areEqual, toDegrees } from './util';
  * @property {tf.Tensor} components - the components of the vector
  */
 export class Vector {
+    /**
+     * @description returns a new random vector
+     * @param input
+     * @returns a new random vector
+     */
+    static empty(input) {
+        return input instanceof Vector
+            ? new Vector(tf.randomUniform(input.components.shape))
+            : new Vector(tf.randomUniform([input]));
+    }
+    /**
+     * @description returns a new zero vector
+     * @param input
+     * @returns a new zero vector
+     */
+    static zeros(input) {
+        return input instanceof Vector
+            ? new Vector(tf.zerosLike(input.components))
+            : new Vector(tf.zeros([input]));
+    }
+    /**
+     * @description returns a new vector of ones
+     * @param input
+     * @returns a new vector of ones
+     */
+    static ones(input) {
+        return input instanceof Vector
+            ? new Vector(tf.onesLike(input.components))
+            : new Vector(tf.ones([input]));
+    }
+    /**
+     * returns a matrix of combined vectors
+     * @param vectors
+     * @returns a matrix of combined vectors
+     */
+    static vstack(...vectors) {
+        return new Matrix(tf.stack(vectors.map(v => v.components)));
+    }
+    /**
+     *
+     * @param vectors
+     * @returns
+     */
+    static hstack(...vectors) {
+        return new Vector(tf.concat(vectors.map(v => v.components), 0));
+    }
     /**
      * @description the components of the vector
      */

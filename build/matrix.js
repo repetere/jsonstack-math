@@ -12,6 +12,36 @@ export class Matrix {
     shape;
     properties;
     /**
+     * @description returns a new random matrix
+     * @param input
+     * @returns a new random matrix
+     */
+    static empty(input, inputColumns) {
+        return input instanceof Matrix
+            ? new Matrix(tf.randomUniform(input.elements.shape))
+            : new Matrix(tf.randomUniform([input, inputColumns]));
+    }
+    /**
+     * @description returns a new zero matrix
+     * @param input
+     * @returns a new zero matrix
+     */
+    static zeros(input, inputColumns) {
+        return input instanceof Matrix
+            ? new Matrix(tf.zerosLike(input.elements))
+            : new Matrix(tf.zeros([input, inputColumns]));
+    }
+    /**
+     * @description returns a new ones matrix
+     * @param input
+     * @returns a new ones matrix
+     */
+    static ones(input, inputColumns) {
+        return input instanceof Matrix
+            ? new Matrix(tf.onesLike(input.elements))
+            : new Matrix(tf.ones([input, inputColumns]));
+    }
+    /**
      * @description creates an instance of Matrix.
      * @param elements
      */
@@ -94,6 +124,10 @@ export class Matrix {
     transpose() {
         return new Matrix(this.elements.transpose());
     }
+    /**
+     * @description returns the inverse of the matrix
+     * @returns the determinant of the matrix
+     */
     determinant() {
         const rowLength = this.rows().length;
         if (rowLength !== this.rows(0).length) {
@@ -112,6 +146,26 @@ export class Matrix {
             return index % 2 === 0 ? result : -result;
         });
         return sum(parts);
+    }
+    /**
+     * @description returns the main diagonal of the matrix
+     * @returns the main diagonal of the matrix
+     */
+    diagonal() {
+        const diagonalTensor = tf.tidy(() => {
+            const diagonalElements = tf.unstack(this.elements).map((tensor, i) => {
+                return tensor.slice([i], [1]);
+            });
+            return tf.concat(diagonalElements);
+        });
+        return new Vector(diagonalTensor);
+    }
+    /**
+     * @description returns the trace of the matrix
+     * @returns the trace of the matrix
+    */
+    trace() {
+        return this.diagonal().components.sum().dataSync()[0];
     }
     /**
      * @description returns the matrix

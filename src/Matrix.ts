@@ -155,12 +155,13 @@ export class Matrix{
    * @returns the main diagonal of the matrix
    */
   diagonal():Vector{
-    return tf.tidy(() => {      
+    const diagonalTensor = tf.tidy(() => {      
       const diagonalElements = tf.unstack(this.elements).map((tensor,i) => {
         return tensor.slice([i],[1]);
       });
-      return new Vector(tf.concat(diagonalElements));
+      return tf.concat(diagonalElements);
    });
+   return new Vector(diagonalTensor);
   }
   /** 
    * @description returns the trace of the matrix

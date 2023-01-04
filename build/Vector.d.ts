@@ -8,6 +8,36 @@ import { Matrix } from './Matrix';
  */
 export declare class Vector {
     /**
+     * @description returns a new random vector
+     * @param input
+     * @returns a new random vector
+     */
+    static empty(input: number | Vector): Vector;
+    /**
+     * @description returns a new zero vector
+     * @param input
+     * @returns a new zero vector
+     */
+    static zeros(input: number | Vector): Vector;
+    /**
+     * @description returns a new vector of ones
+     * @param input
+     * @returns a new vector of ones
+     */
+    static ones(input: number | Vector): Vector;
+    /**
+     * returns a matrix of combined vectors
+     * @param vectors
+     * @returns a matrix of combined vectors
+     */
+    static vstack(...vectors: Vector[]): Matrix;
+    /**
+     *
+     * @param vectors
+     * @returns
+     */
+    static hstack(...vectors: Vector[]): Vector;
+    /**
      * @description the components of the vector
      */
     components: tf.Tensor;
