@@ -1,3 +1,11 @@
+# [1.8.0](https://github.com/repetere/jsonstack-math/compare/v1.7.0...v1.8.0) (2023-01-04)
+
+
+### Features
+
+* added support for trace and diagonal of Matrix ([83f0dfe](https://github.com/repetere/jsonstack-math/commit/83f0dfeea6ad5ebe131007cace6de9678a8e8bb7))
+* trace and diagonals ([600438f](https://github.com/repetere/jsonstack-math/commit/600438f9b06d6e439449e566c2e19f739c75681e))
+
 # [1.7.0](https://github.com/repetere/jsonstack-math/compare/v1.6.0...v1.7.0) (2022-12-30)
 
 
