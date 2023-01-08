@@ -167,6 +167,66 @@ export class Matrix {
     trace() {
         return this.diagonal().components.sum().dataSync()[0];
     }
+    rref() {
+        // const rrefTensor = tf.tidy(() => {
+        //   const {rows,columns} = this.properties;
+        //   let A = this.elements.clone();
+        //   let lead = 0;
+        //   for(let k = 0; k < rows; k++){
+        //     if(columns <= lead) return A;
+        //     let i = k;
+        //     while(this.rows(i,lead) === 0){
+        //       i++;
+        //       if(rows === i){
+        //         i = k;
+        //         lead++;
+        //         if(columns === lead) return A;
+        //       }
+        //     }
+        //     const iRow = A.slice([i,0],[1,columns]);
+        //     const kRow = A.slice([k,0],[1,columns]);
+        //   }
+        // });
+        const A = this.get();
+        const { rows, columns } = this.properties;
+        let lead = 0;
+        for (let k = 0; k < rows; k++) {
+            if (columns <= lead)
+                return this;
+            let i = k;
+            while (A[i][lead] === 0) {
+                i++;
+                if (rows === i) {
+                    i = k;
+                    lead++;
+                    if (columns === lead)
+                        return this;
+                }
+            }
+            let irow = A[i];
+            let krow = A[k];
+            A[i] = krow;
+            A[k] = irow;
+            let val = A[k][lead];
+            for (let j = 0; j < columns; j++) {
+                A[k][j] /= val;
+                if (A[k][j] === -0)
+                    A[k][j] = 0;
+            }
+            for (let i = 0; i < rows; i++) {
+                if (i === k)
+                    continue;
+                val = A[i][lead];
+                for (let j = 0; j < columns; j++) {
+                    A[i][j] -= val * A[k][j];
+                    if (A[i][j] === -0)
+                        A[i][j] = 0;
+                }
+            }
+            lead++;
+        }
+        return new Matrix(A);
+    }
     /**
      * @description returns the matrix
      * @returns the matrix

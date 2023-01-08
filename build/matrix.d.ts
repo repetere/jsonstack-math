@@ -99,6 +99,7 @@ export declare class Matrix {
      * @returns the trace of the matrix
     */
     trace(): number;
+    rref(): Matrix;
     /**
      * @description returns the matrix
      * @returns the matrix

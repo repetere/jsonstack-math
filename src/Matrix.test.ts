@@ -184,7 +184,39 @@ describe('Matrix',()=>{
       const t = m.trace();
       expect(t).toEqual(5);
     });
-  })
+  });
+  describe('rref', () => {
+    const A1 = [
+      [ 1, 2, -1, -4],
+      [ 2, 3, -1,-11],
+      [-2, 0, -3, 22]
+    ];
+    const A2 = [
+      [ 2, 1, -1, 8 ],
+      [ -3, -1, 2, -11 ],
+      [ -2, 1, 2, -3 ]
+    ];
+    const A3 = [
+      [ 1, 2 ],
+      [ 3, 4 ]
+    ];
+    it('should return rref of input matrix', () => {
+      expect(new Matrix(A1).rref().get()).toMatchObject([
+        [ 1, 0, 0, -8 ],
+        [ 0, 1, 0, 1 ],
+        [ 0, 0, 1, -2 ]
+      ]);
+      expect(new Matrix(A2).rref().get()).toMatchObject([
+        [ 1, 0, 0, 2 ],
+        [ 0, 1, 0, 3 ],
+        [ 0, 0, 1, -1 ]
+      ]);
+      expect(new Matrix(A3).rref().get()).toMatchObject([
+        [ 1, 0 ],
+        [ 0, 1 ]
+      ]);
+    });
+  });
   describe('get',()=>{
     it('should return the matrix',()=>{
       const m = new Matrix([[1,2],[3,4]]);
