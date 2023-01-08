@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/repetere/jsonstack-math/compare/v1.8.0...v1.9.0) (2023-01-08)
+
+
+### Features
+
+* cleaned up rref func ([178534c](https://github.com/repetere/jsonstack-math/commit/178534c5205e4a5c9b49627453ad14258d4bd1b8))
+
 # [1.8.0](https://github.com/repetere/jsonstack-math/compare/v1.7.0...v1.8.0) (2023-01-04)
 
 
