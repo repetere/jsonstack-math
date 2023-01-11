@@ -15,6 +15,7 @@ export class Matrix{
   properties: {
     rows: number;
     columns: number;
+    reduced: boolean;
   };
   /**
    * @description returns a new random matrix
@@ -41,16 +42,24 @@ export class Matrix{
    * @param input 
    * @returns a new ones matrix
    */
-    static ones(input:number|Matrix,inputColumns?:number):Matrix{
-      return input instanceof Matrix 
-        ? new Matrix(tf.onesLike(input.elements))
-        : new Matrix(tf.ones([input,inputColumns as number]));
-    }
+  static ones(input:number|Matrix,inputColumns?:number):Matrix{
+    return input instanceof Matrix 
+      ? new Matrix(tf.onesLike(input.elements))
+      : new Matrix(tf.ones([input,inputColumns as number]));
+  }
+  /** 
+   * @description returns a new identity matrix
+   * @param size 
+   * @returns a new identity matrix
+  */
+  static identity(size:number):Matrix{
+    return new Matrix(tf.eye(size));
+  }
   /**
    * @description creates an instance of Matrix.
    * @param elements 
    */
-  constructor(elements:number[][]|tf.Tensor){
+  constructor(elements:number[][]|tf.Tensor,options?:{reduced?:boolean}){
     this.elements = Array.isArray(elements)
       ? tf.tensor2d(elements)
       : elements;
@@ -58,7 +67,14 @@ export class Matrix{
     this.properties = {
       rows: this.shape[0],
       columns: this.shape[1],
+      reduced: options?.reduced ?? false
     };
+  }
+  get rows():number{
+    return this.properties.rows;
+  } 
+  get columns():number{
+    return this.properties.columns;
   }
   /**
    * @description returns the rows of the matrix 
@@ -66,7 +82,7 @@ export class Matrix{
    * @param column 
    * @returns the rows of the matrix 
    */
-  rows(row?:number,column?:number):number[][]|number[]|number{
+  row(row?:number,column?:number):number[][]|number[]|number{
     if(column!==undefined && row!==undefined) return (this.elements as tf.Tensor2D).slice(row,1).arraySync()[0][column] as number;
     else if(row!==undefined) return (this.elements as tf.Tensor2D).slice(row,1).arraySync()[0] as number[];
     else return this.elements.arraySync() as number[][];
@@ -131,18 +147,18 @@ export class Matrix{
    * @returns the determinant of the matrix
    */
   determinant():number{
-    const rowLength = (this.rows() as number[][]).length;
-    if (rowLength !== (this.rows(0) as number[]).length) {
+    const rowLength = (this.row() as number[][]).length;
+    if (rowLength !== (this.row(0) as number[]).length) {
       throw new Error('Only matrices with the same number of rows and columns are supported.')
     }
     if (rowLength === 1) {
-      return this.rows(0,0) as number;
+      return this.row(0,0) as number;
     } else if (rowLength === 2) {
-      return ((this.rows(0,0) as number) * (this.rows(1,1) as number) - (this.rows(0,1) as number) * (this.rows(1,0) as number)) as number;
+      return ((this.row(0,0) as number) * (this.row(1,1) as number) - (this.row(0,1) as number) * (this.row(1,0) as number)) as number;
     }
 
-    const parts = (this.rows(0) as number[]).map((coef, index) => {
-      const matrixRows = (this.rows() as number[][]).slice(1).map(row => [ ...row.slice(0, index), ...row.slice(index + 1)])
+    const parts = (this.row(0) as number[]).map((coef, index) => {
+      const matrixRows = (this.row() as number[][]).slice(1).map(row => [ ...row.slice(0, index), ...row.slice(index + 1)])
       const matrix = new Matrix(matrixRows)
       const result = coef * matrix.determinant()
       return index % 2 === 0 ? result : -result
@@ -170,6 +186,10 @@ export class Matrix{
   trace():number{
     return this.diagonal().components.sum().dataSync()[0];
   }
+  /**
+   * @description returns the row reduced echelon form of the matrix
+   * @returns the rref of the matrix
+   */
   rref():Matrix{
     // const rrefTensor = tf.tidy(() => {
     //   const {rows,columns} = this.properties;
@@ -178,7 +198,7 @@ export class Matrix{
     //   for(let k = 0; k < rows; k++){
     //     if(columns <= lead) return A;
     //     let i = k;
-    //     while(this.rows(i,lead) === 0){
+    //     while(this.row(i,lead) === 0){
     //       i++;
     //       if(rows === i){
     //         i = k;
@@ -227,13 +247,52 @@ export class Matrix{
       }
       lead++;
     }
-    return new Matrix(A);
+    return new Matrix(A,{reduced:true});
+  }
+  /**
+   * @description augments a matrix with a vector or matrix
+   * @param augmentedColumns  the vector or matrix to augment the matrix with
+   * @returns the augmented matrix
+  */
+  augment(augmentedColumns:Vector|Matrix):Matrix{
+    if(augmentedColumns instanceof Vector){
+      return new Matrix(this.elements.concat(augmentedColumns.components.expandDims(1),1));
+    }
+    return new Matrix(this.elements.concat(augmentedColumns.elements,1));
+  }
+  /**
+   * @description returns the pivot positions of the matrix
+   * @returns the pivot positions of the matrix
+   */
+  get pivots():number[][]{
+    // then i,j is a pivot
+    const pivots = [];
+    const {rows,columns} = this.properties;
+    for(let i = 0; i < rows; i++){   
+      for(let j = 0; j < columns; j++){
+        if(this.row(i,j) === 1){ 
+          if(
+            (this.row(i) as number[])
+              .slice(0,j)
+              .every(value => value === 0) // and all values in the row to the left of i,j are 0
+            && 
+            this.column(j)
+              .get()
+              .slice(i+1)
+              .every(value => value === 0) // and all values in the column below i,j are 0
+            ){
+            pivots.push([i,j]);
+          }
+        }
+      }
+    }
+    return pivots;
   }
   /**
    * @description returns the matrix
    * @returns the matrix
    */
   get():number[][]{
-    return this.rows() as number[][];
+    return this.row() as number[][];
   }
 }
