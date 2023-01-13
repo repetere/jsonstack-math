@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/repetere/jsonstack-math/compare/v1.9.0...v1.10.0) (2023-01-11)
+
+
+### Features
+
+* added pivots and basic system solutions ([a799528](https://github.com/repetere/jsonstack-math/commit/a799528f74b857f98898a5502f45d48f6fbefde1))
+
 # [1.9.0](https://github.com/repetere/jsonstack-math/compare/v1.8.0...v1.9.0) (2023-01-08)
 
 
