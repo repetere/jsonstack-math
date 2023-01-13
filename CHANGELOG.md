@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/repetere/jsonstack-math/compare/v1.10.0...v1.11.0) (2023-01-13)
+
+
+### Features
+
+* paramaterized vector solutions ([83da35f](https://github.com/repetere/jsonstack-math/commit/83da35ff68366b69e7e01e9a501b0583016a15f9))
+
 # [1.10.0](https://github.com/repetere/jsonstack-math/compare/v1.9.0...v1.10.0) (2023-01-11)
 
 
