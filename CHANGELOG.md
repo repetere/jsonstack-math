@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/repetere/jsonstack-math/compare/v1.11.0...v1.12.0) (2023-01-15)
+
+
+### Features
+
+* solves n x m consistent systems ([eb50f3d](https://github.com/repetere/jsonstack-math/commit/eb50f3d550c78322b25638bacf35f45156112ed1))
+
 # [1.11.0](https://github.com/repetere/jsonstack-math/compare/v1.10.0...v1.11.0) (2023-01-13)
 
 
