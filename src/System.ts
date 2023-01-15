@@ -29,6 +29,7 @@ export class System{
     return labelNames;
   }
   parameterizeSolution({
+    pivots,
     freeVariableColumnIndexes,
     basicVariableColumnIndexes,
     coefficients,
@@ -37,37 +38,47 @@ export class System{
   }:any){
     const vectorSolution:{[key: string]:number[]}={};
     const solutionCoffientMatrix:number[][]=[];
+    const {pivotRows,pivotColumns} = pivots.reduce((acc:any,pivot:number[])=>{
+      const [pivotRow,pivotColumn] = pivot;
+      acc.pivotRows.push(pivotRow);
+      acc.pivotColumns.push(pivotColumn);
+      return acc;
+    },{pivotRows:[],pivotColumns:[]});
+    // console.log({pivotRows,pivotColumns})
+
     const solutionAugmentedVector:number[]=labelNames.map((labelName:string,rowIndex:number)=>{
-      return (freeVariableColumnIndexes.includes(rowIndex))
-        ? 0
-        : augmentedColumn[rowIndex];
+      // console.log({labelName,rowIndex,augmentedColumn})
+      return (pivotColumns.includes(rowIndex))
+        ? augmentedColumn[pivotRows[pivotColumns.indexOf(rowIndex)]] 
+        : 0;
     });
+
     const emptyRow = coefficients[0].map(()=>0);
-    labelNames.forEach((labelName:string,rowIndex:number)=>{
+    pivotRows.forEach((rowIndex:number)=>{
       let solutionCoefficientRow:number[] = [].concat(emptyRow);
-      if(freeVariableColumnIndexes.includes(rowIndex)){
-        solutionCoefficientRow[rowIndex] = 1;
-      } else if(rowIndex<coefficients.length){
-        solutionCoefficientRow = solutionCoefficientRow.map((value,columnIndex)=>{
-          let coefficientValue = coefficients[rowIndex][columnIndex];
-          if(basicVariableColumnIndexes.includes(columnIndex) && coefficientValue===1){
-            coefficientValue = 0;
-          } else coefficientValue =(coefficientValue!==0)? -1*coefficientValue:0;
-          return coefficientValue;
-        })
-      }
+      solutionCoefficientRow = solutionCoefficientRow.map((value,columnIndex)=>{
+        let coefficientValue:number = coefficients[rowIndex][columnIndex];
+        if(basicVariableColumnIndexes.includes(columnIndex) && coefficientValue===1){
+          coefficientValue = 0;
+        } else coefficientValue =(coefficientValue!==0)? -1*coefficientValue:0;
+        return coefficientValue;
+      }) 
       solutionCoffientMatrix.push(solutionCoefficientRow);
     });
+
+    freeVariableColumnIndexes.forEach((columnIndex:number)=>{
+      let solutionCoefficientRow:number[] = [].concat(emptyRow);
+      solutionCoefficientRow[columnIndex] = 1;
+      solutionCoffientMatrix.splice(columnIndex,0,solutionCoefficientRow);
+    });
     const A = new Matrix(solutionCoffientMatrix);
-    console.log({solutionCoffientMatrix,solutionAugmentedVector})
     vectorSolution.vector = solutionAugmentedVector;
     solutionCoffientMatrix[0].forEach((columnValue,columnIndex)=>{
       const solutionVector = A.column(columnIndex).get();
-      if(solutionVector.every((value)=>value!==0)){
+      if(solutionVector.every((value)=>value===0)===false){
         vectorSolution[labelNames[columnIndex]] = solutionVector;
       }
     });
-    console.log({vectorSolution})
     return vectorSolution;
   }
   async solve(){
@@ -95,22 +106,33 @@ export class System{
       }
       return result;
     },[])
-    const uniqueSolutions= basicVariableColumnIndexes.reduce((solutions,columnIndex)=>{
+  
+    const uniqueSolutions= pivots.reduce((solutions,[rowIndex,columnIndex])=>{
       const labelName = this.labelNames[columnIndex];
-      const coffientRowSum = coefficients.elements.slice(columnIndex,1).sum().arraySync();
-      // console.log({coffientRowSum,columnIndex,labelName});
+      const coffientRowSum = coefficients.elements.slice(rowIndex,1).sum().arraySync();
       if(coffientRowSum===1){
-        const solutionValue = augmentedColumn.get()[columnIndex];
+        const solutionValue = augmentedColumn.get()[rowIndex];
         solutions[labelName] = solutionValue;
       }
       return solutions;
     },{} as {[key:string]:number});
 
-
-    
+    // console.log(A.get(),{
+    //   coefficients: coefficients.get(),
+    //   augmentedColumn: augmentedColumn.get(),
+    //   mainDiagonal: mainDiagonal.get(),
+    //   emptyRowIndexes,
+    //   unique: this.unique,
+    //   consistent: this.consistent,
+    //   pivots,
+    //   basicVariableColumnIndexes,
+    //   freeVariableColumnIndexes,
+    //   labelNames: this.labelNames,
+    // });
     const parameterizedSolutions = (this.unique)
       ?{}
       :this.parameterizeSolution({
+        pivots,
         freeVariableColumnIndexes,
         basicVariableColumnIndexes,
         coefficients: coefficients.get(),
@@ -118,19 +140,8 @@ export class System{
         labelNames: this.labelNames,
       });
     const solutions = {...uniqueSolutions,...parameterizedSolutions};
-    console.log(A.get(),{
-      coefficients: coefficients.get(),
-      augmentedColumn: augmentedColumn.get(),
-      mainDiagonal: mainDiagonal.get(),
-      emptyRowIndexes,
-      unique: this.unique,
-      consistent: this.consistent,
-      pivots,
-      basicVariableColumnIndexes,
-      freeVariableColumnIndexes,
-      labelNames: this.labelNames,
-      solutions
-    });
+    
+    // console.log({solutions})
     this.solved = true;
 
     return {
@@ -142,6 +153,7 @@ export class System{
       basicVariableColumnIndexes,
       freeVariableColumnIndexes,
       labelNames: this.labelNames,
+      solutions,
     }
   }
 }
