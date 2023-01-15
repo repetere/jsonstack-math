@@ -63,7 +63,7 @@ describe('System',()=>{
       expect(solution.pivots).toHaveLength(2);
       
     });
-    it('solves a n x m consistent and non unique solution system',async ()=>{
+    it('solves a m x n consistent and non unique solution system',async ()=>{
       const a = [
         [1,6,2,-5,-2,-4,],
         [0,0,2,-8,-1,3,],
@@ -88,7 +88,20 @@ describe('System',()=>{
       ]
       const A = new System(a);
       const solution = await A.solve();
-      console.log('solution.solutions',solution.solutions)
+      expect(solution.solutions).toMatchObject({});
+      expect(solution.unique).toBe(false);
+      expect(solution.consistent).toBe(false);
+      expect(solution.pivots).toHaveLength(2);
+    });
+    it('solves a inconsistent m x nsystem',async ()=>{
+      const a = [
+        [ 1, -2, -1,  3, 0],
+        [-2,  4,  5, -5, 3],
+        [ 3, -6, -6,  8, 2],
+      ]
+      const A = new System(a);
+      const solution = await A.solve();
+      // console.log('solution',solution)
       expect(solution.solutions).toMatchObject({});
       expect(solution.unique).toBe(false);
       expect(solution.consistent).toBe(false);
@@ -96,20 +109,3 @@ describe('System',()=>{
     });
   });
 });
-/**
- * 1 - - - - - 
- * 0 0 0 1 - -
- * 0 0 0 0 1 -
- * 
- * 
- * 
- * 1 6 2 5 2 4  
- * 0 0 2 8 1 3  
- * 0 0 0 0 1 7  
- * 
-
- 1, -2, -1,  3, 0,
--2,  4,  5, -5, 3,
- 3, -6, -6,  8, 2,
-
- */

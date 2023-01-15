@@ -290,6 +290,21 @@ export class Matrix{
     }
     return pivots;
   }
+  get inverse():Matrix|undefined{
+    const {rows,columns} = this.properties;
+    if(rows !== columns) throw new Error('Only square matrices have an inverse');
+    if(this.determinant() === 0) return undefined;
+    const augmentedMatrix = this.augment(Matrix.identity(rows));
+    const rref = augmentedMatrix.rref();
+    const inverseRows:tf.Tensor[] = [];
+    rref.elements.transpose().unstack().forEach((tensor,i) => {
+      if(i >= columns) inverseRows.push(tensor);
+    });
+    const inverseTensor = (rows===2) ? tf.stack(inverseRows).transpose() : tf.stack(inverseRows);
+    return new Matrix(inverseTensor);
+    // const inverse = rref.column(columns,columns);
+    // return inverse;
+  }
   /**
    * @description returns the matrix
    * @returns the matrix

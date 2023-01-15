@@ -432,6 +432,32 @@ describe('Matrix',()=>{
       expect(m5p).toEqual([[0,2],[1,3]]);
     });
   });
+  describe('inverse',()=>{
+    it('should return the inverse of a 2x2 matrix',()=>{
+      const A = new Matrix([
+        [1,2],
+        [4,7]
+      ]);
+      const Ainverse = A.inverse;
+      expect(Ainverse?.get()).toMatchObject([
+        [-7,2],
+        [4,-1]
+      ]);
+    });
+    it('should return the inverse of a nxn matrix',()=>{
+      const A = new Matrix([
+        [ 1,-3, 2],
+        [ 0, 1,-3],
+        [-2, 4, 4]
+      ]);
+      const Ainverse = A.inverse;
+      expect(Ainverse?.get()).toMatchObject([
+        [ 8, 3, 1 ], 
+        [ 10, 4, 1 ], 
+        [ 3.5, 1.5, 0.5 ] 
+      ]);
+    });
+  });
   describe('get',()=>{
     it('should return the matrix',()=>{
       const m = new Matrix([[1,2],[3,4]]);

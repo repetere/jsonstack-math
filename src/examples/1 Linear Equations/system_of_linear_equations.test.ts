@@ -3,21 +3,33 @@ import { Matrix } from "../../Matrix";
 import { System } from '../../System';
 
 describe('System of Linear Equations',()=>{
-  describe('System Solutions chec',()=>{
-    it('create a matrix object',()=>{
+  describe('Linear Independence',()=>{
+    it('check if a set of vectors is linearly independent', async ()=>{
       const a = [
-        [1,-2,-1],
-        [-1,2,3],
+        [1, 2, 0],
+        [3, 4, 0],
       ];
       const A = new System(a);
-      A.coefficients;
-      // console.log(A.get());
-      // const m = new Matrix([[1,2],[3,4]]);
-      // expect(m).toBeInstanceOf(Matrix);
+      const solution = await A.solve();
+      expect(solution.isLinearlyIndependent).toBe(true);
+
+      const b = [
+        [1, 4, 2, 0],
+        [2, 5, 1, 0],
+        [3, 6, 0, 0],
+      ];
+      const B = new System(b);
+      const solution2 = await B.solve();
+      console.log({solution2})
+      expect(solution2.isLinearlyIndependent).toBe(false);
     });
-    // it('create a matrix from tensor',()=>{
-    //   const m = new Matrix(tf.tensor2d([[1,2],[3,4]]));
-    //   expect(m).toBeInstanceOf(Matrix);
+    // it('check if a set of vectors is linearly dependent',()=>{
+    //   const a = [
+    //     [1,2],
+    //     [2,4],
+    //   ];
+    //   const A = new Matrix(a);
+    //   expect(A.isLinearlyIndependent()).toBe(false);
     // });
   });
 });

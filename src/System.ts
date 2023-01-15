@@ -9,6 +9,7 @@ export class System{
   consistent?: boolean;
   unique?: boolean;
   solved?: boolean;
+  solution?: any;
   constructor(system:Matrix|number[][],labels?:string[]){
     this.system = system instanceof Matrix ? system : new Matrix(system);
     this.labels = labels || [];
@@ -142,11 +143,13 @@ export class System{
         labelNames: this.labelNames,
       });
     const solutions = {...uniqueSolutions,...parameterizedSolutions};
+    const isLinearlyIndependent = (this.consistent)
+      ? (this.unique && augmentedColumn.components.sum().arraySync()===0)
+        ? true
+        : false
+      : undefined;
     
-    // console.log({solutions})
-    this.solved = true;
-
-    return {
+    const solution = {
       coefficients,
       augmentedColumn,
       unique: this.unique,
@@ -155,7 +158,13 @@ export class System{
       basicVariableColumnIndexes,
       freeVariableColumnIndexes,
       labelNames: this.labelNames,
+      isLinearlyIndependent,
       solutions,
-    }
+    };
+
+    this.solution = solution;
+    this.solved = true;
+
+    return solution;
   }
 }
