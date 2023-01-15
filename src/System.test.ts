@@ -80,6 +80,20 @@ describe('System',()=>{
       expect(solution.consistent).toBe(true);
       expect(solution.pivots).toHaveLength(3);
     });
+    it('solves a inconsistent n x n system',async ()=>{
+      const a = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 2, 4],
+      ]
+      const A = new System(a);
+      const solution = await A.solve();
+      console.log('solution.solutions',solution.solutions)
+      expect(solution.solutions).toMatchObject({});
+      expect(solution.unique).toBe(false);
+      expect(solution.consistent).toBe(false);
+      expect(solution.pivots).toHaveLength(2);
+    });
   });
 });
 /**
@@ -93,19 +107,9 @@ describe('System',()=>{
  * 0 0 2 8 1 3  
  * 0 0 0 0 1 7  
  * 
-rref
-1, 6, 0,  3, 0| 0
-0, 0, 1, -4, 0| 5
-0, 0, 0,  0, 1| 7
 
-vex 
-0,  -6, 0,  -3,  0 | 0
-0,   1, 0,   0,  0 | 0
-0,   0, 0,   4,  0 | 5
-0,   0, 0,   1,  0 | 0
-0,   0, 0,   0,  0 | 7
+ 1, -2, -1,  3, 0,
+-2,  4,  5, -5, 3,
+ 3, -6, -6,  8, 2,
 
-vector = [0,0,5,0,7]
-x_2 = [6,1,0,0,0]
-x_4 = [-3,0,4,1,0]
  */

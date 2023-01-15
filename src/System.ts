@@ -97,7 +97,7 @@ export class System{
       }
     });
     if(this.consistent===undefined) this.consistent = true;
-    this.unique = mainDiagonal.get().every((value)=>value===1) && mainDiagonal.get().length === (coefficients.row(0) as number[]).length;
+    this.unique = mainDiagonal.get().every((value)=>value===1) && mainDiagonal.get().length === (coefficients.row(0) as number[]).length && this.consistent;
     const pivots = coefficients.pivots;
     const basicVariableColumnIndexes = pivots.map((pivot)=>pivot[1]);
     const freeVariableColumnIndexes = (coefficients.row(0) as number[]).reduce((result:number[],rowValue:number,columnIndex:number)=>{
@@ -107,7 +107,9 @@ export class System{
       return result;
     },[])
   
-    const uniqueSolutions= pivots.reduce((solutions,[rowIndex,columnIndex])=>{
+    const uniqueSolutions =(this.consistent===false)
+      ? {}
+      : pivots.reduce((solutions,[rowIndex,columnIndex])=>{
       const labelName = this.labelNames[columnIndex];
       const coffientRowSum = coefficients.elements.slice(rowIndex,1).sum().arraySync();
       if(coffientRowSum===1){
@@ -129,7 +131,7 @@ export class System{
     //   freeVariableColumnIndexes,
     //   labelNames: this.labelNames,
     // });
-    const parameterizedSolutions = (this.unique)
+    const parameterizedSolutions = (this.unique || this.consistent===false)
       ?{}
       :this.parameterizeSolution({
         pivots,

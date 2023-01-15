@@ -171,11 +171,13 @@ export class Matrix{
    * @returns the main diagonal of the matrix
    */
   diagonal():Vector{
-    const diagonalTensor = tf.tidy(() => {      
-      const diagonalElements = tf.unstack(this.elements).map((tensor,i) => {
-        return tensor.slice([i],[1]);
+    const diagonalTensor = tf.tidy(() => {     
+      const [rows,columns] = this.elements.shape;
+      const diagonalTensors:tf.Tensor[] = [];
+      tf.unstack(this.elements).forEach((tensor,i) => {
+        if(i<columns) diagonalTensors.push( tensor.slice([i],[1]));
       });
-      return tf.concat(diagonalElements);
+      return tf.concat(diagonalTensors);
    });
    return new Vector(diagonalTensor);
   }
