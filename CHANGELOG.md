@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/repetere/jsonstack-math/compare/v1.13.0...v1.14.0) (2023-01-15)
+
+
+### Features
+
+* added inverse matrices ([b5f5a69](https://github.com/repetere/jsonstack-math/commit/b5f5a691c8b4e85e18cc38a88c27399ecdaaaebb))
+
 # [1.13.0](https://github.com/repetere/jsonstack-math/compare/v1.12.0...v1.13.0) (2023-01-15)
 
 
