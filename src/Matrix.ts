@@ -1,7 +1,8 @@
 import { getBackend, setBackend, } from "./tensorflow_singleton";
 import * as tf from '@tensorflow/tfjs-node';
 import {Vector} from './Vector';
-import {sum} from './util';
+import {System} from './System';
+import {sum,EPSILON, areEqual} from './util';
 
 /**
  * @description a matrix class that uses tensorflow tensors to represent matrices
@@ -193,31 +194,11 @@ export class Matrix{
    * @returns the rref of the matrix
    */
   rref():Matrix{
-    // const rrefTensor = tf.tidy(() => {
-    //   const {rows,columns} = this.properties;
-    //   let A = this.elements.clone();
-    //   let lead = 0;
-    //   for(let k = 0; k < rows; k++){
-    //     if(columns <= lead) return A;
-    //     let i = k;
-    //     while(this.row(i,lead) === 0){
-    //       i++;
-    //       if(rows === i){
-    //         i = k;
-    //         lead++;
-    //         if(columns === lead) return A;
-    //       }
-    //     }
-    //     const iRow = A.slice([i,0],[1,columns]);
-    //     const kRow = A.slice([k,0],[1,columns]);
-
-    //   }
-    // });
     const A = this.get();
     const {rows,columns} = this.properties;
     let lead = 0;
     for (let k = 0; k < rows; k++) {
-      if (columns <= lead) return this;
+      if (columns <= lead) return new Matrix(A,{reduced:true});
 
       let i = k;
       while (A[i][lead] === 0) {
@@ -225,7 +206,7 @@ export class Matrix{
         if (rows === i) {
             i = k;
             lead++;
-            if (columns === lead) return this;
+            if (columns === lead) return new Matrix(A,{reduced:true});
         }
       }
       let irow = A[i]; 
@@ -235,7 +216,9 @@ export class Matrix{
       
       let val = A[k][lead];
       for (let j = 0; j < columns; j++) {
-        A[k][j] /= val;
+        if(areEqual(val,0) ===false) A[k][j] /= val; 
+        else A[k][j] = 0;
+        
         if(A[k][j]=== -0) A[k][j] = 0;
       }
       
@@ -261,6 +244,41 @@ export class Matrix{
       return new Matrix(this.elements.concat(augmentedColumns.components.expandDims(1),1));
     }
     return new Matrix(this.elements.concat(augmentedColumns.elements,1));
+  }
+  async eigenvalues(options:{iterations?:number; rounded?:boolean; unique?:boolean}={iterations:1000,rounded:false, unique:false}):Promise<Vector>{
+    const A = tf.tidy(() => {
+      let [Q,R] = tf.linalg.qr(this.elements);
+      for(let i = 0; i < (options?.iterations||1000); i++){
+        [Q,R] = tf.linalg.qr(R.matMul(Q));
+      }
+      return R.matMul(Q);
+    });
+    const eigenvalueDiagonal = (options?.rounded) ? new Matrix(A.round()).diagonal():new Matrix(A).diagonal();
+    if(options?.unique) return new Vector(tf.unique(eigenvalueDiagonal.components).values);
+    return eigenvalueDiagonal;
+  }
+  async eigenvectors(options:{iterations?:number; rounded?:boolean}={iterations:1000,rounded:false}):Promise<any>{
+    const eigenvalues = await this.eigenvalues({...options,unique:true});
+    const eigenvectors = await Promise.all(eigenvalues.get().map(async(eigenvalue:number)=>{
+      const A = this.elements.sub(tf.scalar(eigenvalue).mul(tf.eye(this.rows)));
+      const[rows,columns] = A.shape;
+      const B = new Matrix(A).augment(Vector.zeros(rows))
+      const augmentedSystem = new System(B);
+      const solution = await augmentedSystem.solve();
+      return {
+        eigenvalue,
+        eigenvectors:solution.solutions
+      }
+    }));
+    return eigenvectors.map(({eigenvalue,eigenvectors}) => {
+      const {vector,...vectors} = eigenvectors;
+      const evs:number[][] = Object.values(vectors) as number[][];
+      return {
+        eigenvalue,
+        eigenvectors:evs.map((ev:number[])=>new Vector(ev)),
+        multiplicity:evs.length
+      }
+    });
   }
   /**
    * @description returns the pivot positions of the matrix
@@ -290,6 +308,10 @@ export class Matrix{
     }
     return pivots;
   }
+  /**
+   * @description returns the inverse of the matrix
+   * @returns the inverse of the matrix
+   */
   get inverse():Matrix|undefined{
     const {rows,columns} = this.properties;
     if(rows !== columns) throw new Error('Only square matrices have an inverse');

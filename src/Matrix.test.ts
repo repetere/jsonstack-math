@@ -457,6 +457,17 @@ describe('Matrix',()=>{
         [ 3.5, 1.5, 0.5 ] 
       ]);
     });
+    it('should return error for non square matrices',()=>{
+      const m = new Matrix([[1,2],[3,4],[5,6]]);
+      expect(()=>m.inverse).toThrow();
+    });
+    it('should be undefined if determinant is 0 (singular)',()=>{
+      const m = new Matrix([
+        [ 6,-9],
+        [-4, 6]
+      ]);
+      expect(m.inverse).toBeUndefined();
+    });
   });
   describe('get',()=>{
     it('should return the matrix',()=>{

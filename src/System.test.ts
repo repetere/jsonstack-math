@@ -80,6 +80,26 @@ describe('System',()=>{
       expect(solution.consistent).toBe(true);
       expect(solution.pivots).toHaveLength(3);
     });
+    it('solves a m x n consistent and non unique solution system',async ()=>{
+      const a = [
+        [-3, 6,-1, 1, -7, 0],
+        [ 1,-2, 2, 3, -1, 0],
+        [ 2,-4, 5, 8, -4, 0]
+      ]
+      const A = new System(a);
+      const solution = await A.solve();
+
+
+      console.log('solution.coefficients.get()',solution.coefficients.get())
+      console.log('solution.solutions',solution.solutions)
+      // expect(solution.solutions.vector).toMatchObject([0,0,5,0,7]);
+      // expect(solution.solutions.x_2).toMatchObject([-6,1,0,0,0]);
+      // expect(solution.solutions.x_4).toMatchObject([-3,0,4,1,0]);
+      // expect(solution.solutions.x_5).toBe(7);
+      // expect(solution.unique).toBe(false);
+      // expect(solution.consistent).toBe(true);
+      // expect(solution.pivots).toHaveLength(3);
+    });
     it('solves a inconsistent n x n system',async ()=>{
       const a = [
         [1, 2, 3],
@@ -93,7 +113,7 @@ describe('System',()=>{
       expect(solution.consistent).toBe(false);
       expect(solution.pivots).toHaveLength(2);
     });
-    it('solves a inconsistent m x nsystem',async ()=>{
+    it('solves a inconsistent m x n system',async ()=>{
       const a = [
         [ 1, -2, -1,  3, 0],
         [-2,  4,  5, -5, 3],
