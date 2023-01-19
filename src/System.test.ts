@@ -88,17 +88,19 @@ describe('System',()=>{
       ]
       const A = new System(a);
       const solution = await A.solve();
-
-
-      console.log('solution.coefficients.get()',solution.coefficients.get())
-      console.log('solution.solutions',solution.solutions)
-      // expect(solution.solutions.vector).toMatchObject([0,0,5,0,7]);
-      // expect(solution.solutions.x_2).toMatchObject([-6,1,0,0,0]);
-      // expect(solution.solutions.x_4).toMatchObject([-3,0,4,1,0]);
+      // console.log('solution.coefficients.get()',solution.coefficients.get())
+      // console.log('solution.solutions',solution.solutions)
+      // expect(solution.solutions.vector).toMatchObject([2,0,5,0,7]);
+      // expect(solution.solutions.x_2).toMatchObject([1,0,-2,1,0]);
+      // expect(solution.solutions.x_4).toMatchObject([-3,0,2,0,1]);
       // expect(solution.solutions.x_5).toBe(7);
-      // expect(solution.unique).toBe(false);
-      // expect(solution.consistent).toBe(true);
-      // expect(solution.pivots).toHaveLength(3);
+      expect(solution.solutions.vector).toMatchObject([0,0,0,0,0]);
+      expect(solution.solutions.x_2).toMatchObject([2,1,0,0,0]);
+      expect(solution.solutions.x_4).toMatchObject([1,0,-2,1,0]);
+      expect(solution.solutions.x_5).toMatchObject([-3,0,2,0,1]);
+      expect(solution.unique).toBe(false);
+      expect(solution.consistent).toBe(true);
+      expect(solution.pivots).toHaveLength(2);
     });
     it('solves a inconsistent n x n system',async ()=>{
       const a = [

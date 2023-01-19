@@ -329,28 +329,28 @@ describe('Matrix',()=>{
       [2, 1,6],
       [2,-1,8],
     ]
-    // it('should return the eigenvectors of the matrix',async()=>{
-    //   const m = new Matrix([
-    //     [1,6],
-    //     [5,2]
-    //   ]);
-    //   const e = await m.eigenvectors();
-    //   console.log('eigenvectors',e.get());
-    //   expect(e.get()[0]).toMatchObject([0.8,0.6]);
-    //   expect(e.get()[1]).toMatchObject([-0.6,0.8]);
-    // });
+    it('should return the eigenvectors of the matrix',async()=>{
+      const m = new Matrix([
+        [1,6],
+        [5,2]
+      ]);
+      const e = await m.eigenvectors();
+      expect(e[0].eigenvalue).toBeCloseTo(7);
+      expect(e[0].multiplicity).toBe(2);
+    });
     it('should round the eigenvectors of the matrix',async()=>{
       const C = new Matrix(c);
       const evc = await C.eigenvectors({rounded:true});
-      console.log({evc})
       expect(evc[0].multiplicity).toBe(1);
       expect(evc[0].eigenvalue).toBe(9);
       expect(evc[1].multiplicity).toBe(2);
       expect(evc[1].eigenvalue).toBe(2);
+      expect(evc[0].eigenvectors[0].get()).toMatchObject([1,1,1]);
+      expect(evc[1].eigenvectors[0].get()).toMatchObject([0.5,1,0]);
+      expect(evc[1].eigenvectors[1].get()).toMatchObject([-3,0,1]);
       console.log('evc[0].eigenvectors[0].get()',evc[0].eigenvectors[0].get());
-// ?      console.log('evc[1].eigenvectors[0].get()',evc[1].eigenvectors[0].get());
-      console.log('evc[1].eigenvectors[0]',evc[1].eigenvectors[0])
-
+      console.log('evc[1].eigenvectors[0].get()',evc[1].eigenvectors[0].get());
+      console.log('evc[1].eigenvectors[1].get()',evc[1].eigenvectors[1].get());
     });
   });
   describe('pivots',()=>{

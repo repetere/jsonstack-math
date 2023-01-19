@@ -49,7 +49,7 @@ describe('System of Linear Equations',()=>{
       ]
       const C = new Matrix(c);
       const solution3 = await C.eigenvectors({rounded:true});
-      console.log('solution3[0]',solution3[0]);
+      // console.log('solution3[0]',solution3[0]);
 
       const d = [
         [0,-1],
@@ -57,7 +57,7 @@ describe('System of Linear Equations',()=>{
       ];
       const D = new Matrix(d);
       const solution4 = await D.eigenvalues({rounded:false});
-      console.log('solution4.get()',solution4.get());
+      // console.log('solution4.get()',solution4.get());
     });
     it('should rref correctly',async ()=>{
       const a = [
@@ -67,7 +67,7 @@ describe('System of Linear Equations',()=>{
       ];
       const A = new Matrix(a);
       const solution = await A.rref();
-      console.log('solution.get()',solution.get());
+      // console.log('solution.get()',solution.get());
     });
     //Column Space A = Pivor Columns of A
     //Null Space A = Non Pivor Columns of A
