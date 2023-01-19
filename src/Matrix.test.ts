@@ -210,6 +210,8 @@ describe('Matrix',()=>{
       [ 2, 3, -1,-11],
       [-2, 0, -3, 22]
     ];
+    const mA1 = new Matrix(A1);
+    const rrefA1 = mA1.rref();
     const A2 = [
       [ 2, 1, -1, 8 ],
       [ -3, -1, 2, -11 ],
@@ -229,12 +231,18 @@ describe('Matrix',()=>{
       [ 0, 0 ],
     ];
     const A6=[[]];
+    const A7=[
+      [.10009e15,1,1],
+      [1,1,1],
+      [1,1,1],
+    ];
     it('should return rref of input matrix', () => {
-      expect(new Matrix(A1).rref().get()).toMatchObject([
+      expect(rrefA1.get()).toMatchObject([
         [ 1, 0, 0, -8 ],
         [ 0, 1, 0, 1 ],
         [ 0, 0, 1, -2 ]
       ]);
+      expect(rrefA1.rref()).toBe(rrefA1);
       expect(new Matrix(A2).rref().get()).toMatchObject([
         [ 1, 0, 0, 2 ],
         [ 0, 1, 0, 3 ],
@@ -249,12 +257,17 @@ describe('Matrix',()=>{
         [ 0, 0 ]
       ]);
       expect(new Matrix(A5).rref().get()).toMatchObject([
-        [ 5, 0, ],
+        [ 1, 0, ],
         [ 0, 0, ],
         [ 0, 0, ],
       ]);
       expect(new Matrix(A6).rref().get()).toMatchObject([
         
+      ]);
+      expect(new Matrix(A7).rref().get()).toMatchObject([
+        [1,0,0],
+        [0,1,1],
+        [0,0,0],
       ]);
     });
   });
@@ -282,6 +295,62 @@ describe('Matrix',()=>{
         [1,2,6],
         [3,4,7]
       ]);
+    });
+  });
+  describe('eigenvalues',()=>{
+    const c = [
+      [4,-1,6],
+      [2, 1,6],
+      [2,-1,8],
+    ]
+    it('should return the eigenvalues of the matrix',async()=>{
+      const m = new Matrix([
+        [1,6],
+        [5,2]
+      ]);
+      const e = await m.eigenvalues();
+      expect(e.get()[0]).toBeCloseTo(7);
+      expect(e.get()[1]).toBeCloseTo(-4);
+    });
+    it('should round the eigenvalues of the matrix',async()=>{
+      const C = new Matrix(c);
+      const eigenvalues = await C.eigenvalues({rounded:true, iterations:900});
+      expect(eigenvalues.get()).toMatchObject([9,2,2]);
+    });
+    it('should return unique the eigenvalues of the matrix',async()=>{
+      const C = new Matrix(c);
+      const eigenvalues = await C.eigenvalues({rounded:true, unique:true});
+      expect(eigenvalues.get()).toMatchObject([9,2]);
+    });
+  });
+  describe('eigenvectors',()=>{
+    const c = [
+      [4,-1,6],
+      [2, 1,6],
+      [2,-1,8],
+    ]
+    // it('should return the eigenvectors of the matrix',async()=>{
+    //   const m = new Matrix([
+    //     [1,6],
+    //     [5,2]
+    //   ]);
+    //   const e = await m.eigenvectors();
+    //   console.log('eigenvectors',e.get());
+    //   expect(e.get()[0]).toMatchObject([0.8,0.6]);
+    //   expect(e.get()[1]).toMatchObject([-0.6,0.8]);
+    // });
+    it('should round the eigenvectors of the matrix',async()=>{
+      const C = new Matrix(c);
+      const evc = await C.eigenvectors({rounded:true});
+      console.log({evc})
+      expect(evc[0].multiplicity).toBe(1);
+      expect(evc[0].eigenvalue).toBe(9);
+      expect(evc[1].multiplicity).toBe(2);
+      expect(evc[1].eigenvalue).toBe(2);
+      console.log('evc[0].eigenvectors[0].get()',evc[0].eigenvectors[0].get());
+// ?      console.log('evc[1].eigenvectors[0].get()',evc[1].eigenvectors[0].get());
+      console.log('evc[1].eigenvectors[0]',evc[1].eigenvectors[0])
+
     });
   });
   describe('pivots',()=>{

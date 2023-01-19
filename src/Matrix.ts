@@ -194,8 +194,10 @@ export class Matrix{
    * @returns the rref of the matrix
    */
   rref():Matrix{
+    if(this.properties.reduced) return this;
     const A = this.get();
     const {rows,columns} = this.properties;
+    if(rows<1||columns<1) return this;
     let lead = 0;
     for (let k = 0; k < rows; k++) {
       if (columns <= lead) return new Matrix(A,{reduced:true});
@@ -245,6 +247,10 @@ export class Matrix{
     }
     return new Matrix(this.elements.concat(augmentedColumns.elements,1));
   }
+  /**
+   * @description returns the eigenvalues of the matrix
+   * @returns the eigenvalues of the matrix
+   */
   async eigenvalues(options:{iterations?:number; rounded?:boolean; unique?:boolean}={iterations:1000,rounded:false, unique:false}):Promise<Vector>{
     const A = tf.tidy(() => {
       let [Q,R] = tf.linalg.qr(this.elements);
@@ -257,22 +263,20 @@ export class Matrix{
     if(options?.unique) return new Vector(tf.unique(eigenvalueDiagonal.components).values);
     return eigenvalueDiagonal;
   }
+  /**
+   * @description returns the eigenvectors of the matrix
+   * @param options 
+   * @returns the eigenvectors of the matrix
+   */
   async eigenvectors(options:{iterations?:number; rounded?:boolean}={iterations:1000,rounded:false}):Promise<any>{
     const eigenvalues = await this.eigenvalues({...options,unique:true});
     const eigenvectors = await Promise.all(eigenvalues.get().map(async(eigenvalue:number)=>{
       const A = this.elements.sub(tf.scalar(eigenvalue).mul(tf.eye(this.rows)));
-      console.log({eigenvalue})
+      // console.log({eigenvalue})
       const[rows,columns] = A.shape;
       const B = new Matrix(A).augment(Vector.zeros(rows))
       const augmentedSystem = new System(B);
       const solution = await augmentedSystem.solve();
-      // console.log({eigenvalue,solution},solution.coefficients.get(),solution.solutions);
-      // const inverseRows:tf.Tensor[] = [];
-      // rref.elements.transpose().unstack().forEach((tensor,i) => {
-      //   if(i >= columns) inverseRows.push(tensor);
-      // });
-      // const inverseTensor = (rows===2) ? tf.stack(inverseRows).transpose() : tf.stack(inverseRows).transpose().reshape([rows,rows]);
-      // return new Vector((await inverseTensor.array())[0]);
       return {
         eigenvalue,
         eigenvectors:solution.solutions
