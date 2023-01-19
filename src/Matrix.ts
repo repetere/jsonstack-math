@@ -261,10 +261,18 @@ export class Matrix{
     const eigenvalues = await this.eigenvalues({...options,unique:true});
     const eigenvectors = await Promise.all(eigenvalues.get().map(async(eigenvalue:number)=>{
       const A = this.elements.sub(tf.scalar(eigenvalue).mul(tf.eye(this.rows)));
+      console.log({eigenvalue})
       const[rows,columns] = A.shape;
       const B = new Matrix(A).augment(Vector.zeros(rows))
       const augmentedSystem = new System(B);
       const solution = await augmentedSystem.solve();
+      // console.log({eigenvalue,solution},solution.coefficients.get(),solution.solutions);
+      // const inverseRows:tf.Tensor[] = [];
+      // rref.elements.transpose().unstack().forEach((tensor,i) => {
+      //   if(i >= columns) inverseRows.push(tensor);
+      // });
+      // const inverseTensor = (rows===2) ? tf.stack(inverseRows).transpose() : tf.stack(inverseRows).transpose().reshape([rows,rows]);
+      // return new Vector((await inverseTensor.array())[0]);
       return {
         eigenvalue,
         eigenvectors:solution.solutions
