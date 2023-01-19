@@ -348,9 +348,6 @@ describe('Matrix',()=>{
       expect(evc[0].eigenvectors[0].get()).toMatchObject([1,1,1]);
       expect(evc[1].eigenvectors[0].get()).toMatchObject([0.5,1,0]);
       expect(evc[1].eigenvectors[1].get()).toMatchObject([-3,0,1]);
-      console.log('evc[0].eigenvectors[0].get()',evc[0].eigenvectors[0].get());
-      console.log('evc[1].eigenvectors[0].get()',evc[1].eigenvectors[0].get());
-      console.log('evc[1].eigenvectors[1].get()',evc[1].eigenvectors[1].get());
     });
   });
   describe('pivots',()=>{
