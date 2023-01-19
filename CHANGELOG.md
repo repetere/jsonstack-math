@@ -1,3 +1,16 @@
+# [1.15.0](https://github.com/repetere/jsonstack-math/compare/v1.14.0...v1.15.0) (2023-01-19)
+
+
+### Bug Fixes
+
+* adding docs, and tests for eigen ([5f57513](https://github.com/repetere/jsonstack-math/commit/5f57513947951f13f27361836af669940cf37260))
+
+
+### Features
+
+* added eigenvalues and vectors ([b1c0543](https://github.com/repetere/jsonstack-math/commit/b1c0543ed9ddb5c37fc3e97d6fe905676743e83c))
+* added eigenvalues and vectors ([f7901bf](https://github.com/repetere/jsonstack-math/commit/f7901bf46c26002a488d5e64551d0751a004f946))
+
 # [1.14.0](https://github.com/repetere/jsonstack-math/compare/v1.13.0...v1.14.0) (2023-01-15)
 
 
