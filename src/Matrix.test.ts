@@ -350,6 +350,18 @@ describe('Matrix',()=>{
       expect(evc[1].eigenvectors[1].get()).toMatchObject([-3,0,1]);
     });
   });
+  describe('diagonalize',()=>{
+    it('should diagonalize a matrix', async ()=>{
+      const A = new Matrix([
+        [ 1, 3, 3],
+        [-3,-5,-3],
+        [ 3, 3, 1],
+      ]);
+      const {P,D,P_inverse} = await A.diagonalize();
+      expect(A.multiply(P).get()).toMatchObject(P.multiply(D).get());
+      expect(A.multiply(A).get()).toMatchObject(P.multiply(D).multiply(D).multiply(P_inverse).get());
+    });
+  });
   describe('pivots',()=>{
     it('should return the pivots of a 2x2 matrix',()=>{
       const m1 = new Matrix([
@@ -518,9 +530,9 @@ describe('Matrix',()=>{
       ]);
       const Ainverse = A.inverse;
       expect(Ainverse?.get()).toMatchObject([
-        [ 8, 3, 1 ], 
-        [ 10, 4, 1 ], 
-        [ 3.5, 1.5, 0.5 ] 
+        [ 8,10, 3.5 ], 
+        [ 3, 4, 1.5 ], 
+        [ 1, 1, 0.5 ] 
       ]);
     });
     it('should return error for non square matrices',()=>{
@@ -533,6 +545,19 @@ describe('Matrix',()=>{
         [-4, 6]
       ]);
       expect(m.inverse).toBeUndefined();
+    });
+    it('should return the inverse of a nxn matrix',()=>{
+      const A = new Matrix([
+        [ 1,-1,-1],
+        [-1, 1, 0],
+        [ 1, 0, 1]
+      ]);
+      const Ainverse = A.inverse;
+      expect(Ainverse?.get()).toMatchObject([
+        [ 1, 1, 1 ], 
+        [ 1, 2, 1 ], 
+        [-1,-1, 0 ] 
+      ]);
     });
   });
   describe('get',()=>{

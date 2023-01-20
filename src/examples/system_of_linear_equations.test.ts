@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs-node';
-import { Matrix } from "../../Matrix";
-import { System } from '../../System';
+import { Matrix } from "../Matrix";
+import { System } from '../System';
 
 describe('System of Linear Equations',()=>{
   describe('Linear Independence',()=>{

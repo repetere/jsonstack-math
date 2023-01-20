@@ -292,6 +292,36 @@ export class Matrix{
       }
     });
   }
+  async diagonalize(options:{iterations?:number; rounded?:boolean}={iterations:1000,rounded:true}):Promise<any>{
+    let D: Matrix|undefined = undefined;
+    let P: Matrix|undefined = undefined;
+    let P_inverse: Matrix|undefined = undefined;
+    let diagonalizable = true;
+    const {rows,columns} = this.properties;
+    const d = Matrix.zeros(rows,columns).get();
+    const p_transposed:number[][] = [];
+    const eigenvectors = await this.eigenvectors(options);
+    const numberOfEigenvectors = eigenvectors.reduce((acc:number,eigenvector:any)=>acc+eigenvector.multiplicity,0);
+    if(numberOfEigenvectors<rows) return {P,D,P_inverse,diagonalizable:false};
+    let e=0;
+    eigenvectors
+      .sort((a:any,b:any)=>b.eigenvalue-a.eigenvalue)
+      .forEach((eigen:any)=>{
+        const {eigenvalue,eigenvectors,multiplicity} = eigen;
+        for(let i = 0; i < multiplicity; i++){
+          d[e][e] = eigenvalue;
+          const ev = eigenvectors[i].get();
+          p_transposed.push(ev);
+          e++;
+        }
+      });
+    P = new Matrix(p_transposed).transpose();
+    const p_rref = P.rref();
+    if(p_rref.pivots.length<columns) return {P,D,P_inverse,diagonalizable:false};
+    P_inverse = P.inverse;
+    D = new Matrix(d);
+    return {P,D,P_inverse,diagonalizable};
+  }
   /**
    * @description returns the pivot positions of the matrix
    * @returns the pivot positions of the matrix
@@ -330,14 +360,8 @@ export class Matrix{
     if(this.determinant() === 0) return undefined;
     const augmentedMatrix = this.augment(Matrix.identity(rows));
     const rref = augmentedMatrix.rref();
-    const inverseRows:tf.Tensor[] = [];
-    rref.elements.transpose().unstack().forEach((tensor,i) => {
-      if(i >= columns) inverseRows.push(tensor);
-    });
-    const inverseTensor = (rows===2) ? tf.stack(inverseRows).transpose() : tf.stack(inverseRows);
-    return new Matrix(inverseTensor);
-    // const inverse = rref.column(columns,columns);
-    // return inverse;
+    const [I,A_inv] = tf.split(rref.elements,2,1);
+    return new Matrix(A_inv);
   }
   /**
    * @description returns the matrix
