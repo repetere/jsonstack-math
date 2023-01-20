@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/repetere/jsonstack-math/compare/v1.15.0...v1.16.0) (2023-01-20)
+
+
+### Features
+
+* diagonalization ([e56c97b](https://github.com/repetere/jsonstack-math/commit/e56c97b6c61a5295899bda3d505396b41ab3d13a))
+
 # [1.15.0](https://github.com/repetere/jsonstack-math/compare/v1.14.0...v1.15.0) (2023-01-19)
 
 
