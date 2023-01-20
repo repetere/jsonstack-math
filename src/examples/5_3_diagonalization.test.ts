@@ -53,17 +53,7 @@ describe('Diagonalization',()=>{
       const {P,D,P_inverse} = await A.diagonalize();
       expect(A.multiply(P).get()).toMatchObject(P.multiply(D).get());
       expect(A.multiply(A).get()).toMatchObject(P.multiply(D).multiply(D).multiply(P_inverse).get());
-
     })
   });
 });
 //https://github.com/tensorflow/tfjs-core/pull/1675
-
-/**
- * 
-ykim@justworks.com
-jwilson@justworks.com
-lauren@justworks.com
-eurgola@justworks.com
-genesis@justworks.com
- */
