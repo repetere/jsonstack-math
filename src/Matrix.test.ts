@@ -335,8 +335,12 @@ describe('Matrix',()=>{
         [5,2]
       ]);
       const e = await m.eigenvectors();
+      const e_rounded = await m.eigenvectors({rounded:true});
       expect(e[0].eigenvalue).toBeCloseTo(7);
-      expect(e[0].multiplicity).toBe(2);
+      expect(e[0].multiplicity).toBe(0);
+      expect(e_rounded[0].eigenvalue).toBe(7);
+      expect(e_rounded[1].eigenvalue).toBe(-4);
+      expect(e_rounded[0].multiplicity).toBe(1);
     });
     it('should round the eigenvectors of the matrix',async()=>{
       const C = new Matrix(c);

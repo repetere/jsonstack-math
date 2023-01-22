@@ -285,10 +285,16 @@ export class Matrix{
     return eigenvectors.map(({eigenvalue,eigenvectors}) => {
       const {vector,...vectors} = eigenvectors;
       const evs:number[][] = Object.values(vectors) as number[][];
+      const evectors = evs
+        .map((ev:number[])=>ev.length
+          ?new Vector(ev)
+          :undefined
+        )
+        .filter((ev:Vector|undefined)=>ev);
       return {
         eigenvalue,
-        eigenvectors:evs.map((ev:number[])=>new Vector(ev)),
-        multiplicity:evs.length
+        eigenvectors:evectors,
+        multiplicity:evectors.length
       }
     });
   }
