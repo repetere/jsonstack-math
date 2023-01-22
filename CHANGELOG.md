@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/repetere/jsonstack-math/compare/v1.16.0...v1.16.1) (2023-01-22)
+
+
+### Bug Fixes
+
+* fixed undefined eigenvectors ([c097e03](https://github.com/repetere/jsonstack-math/commit/c097e0334d5ae21b9c45024df23bcfa16e214383))
+
 # [1.16.0](https://github.com/repetere/jsonstack-math/compare/v1.15.0...v1.16.0) (2023-01-20)
 
 
