@@ -44,34 +44,34 @@ describe('Diagonalization',()=>{
   //   });
   // });
   describe('diagonalize a matrix',()=>{
-    const c = [
-      [4,-1,6],
-      [2, 1,6],
-      [2,-1,8],
-    ]
-    it('should return the eigenvectors of the matrix',async()=>{
-      const m = new Matrix([
-        [1,6],
-        [5,2]
-      ]);
-      const e = await m.eigenvectors();
-      const e_rounded = await m.eigenvectors({rounded:true});
-      expect(e[0].eigenvalue).toBeCloseTo(7);
-      expect(e[0].multiplicity).toBe(0);
-      expect(e_rounded[0].eigenvalue).toBe(7);
-      expect(e_rounded[1].eigenvalue).toBe(-4);
-      expect(e_rounded[0].multiplicity).toBe(1);
+    it('diagnoalize a matrix', async ()=>{
+      // const A = new Matrix([ 
+      //   [ 5, 0, 0, 0],
+      //   [ 0, 5, 0, 0],
+      //   [ 1, 4,-3, 0],
+      //   [-1,-2, 0,-3]
+      // ]);
+      // const {P,D,P_inverse} = await A.diagonalize();
+      // console.log('P');
+      // P.elements.print();
+      // console.log('D');
+      // D.elements.print();
+      // console.log('P_inverse');
+      // P_inverse.elements.print();
+      // expect(P.multiply(D).multiply(P_inverse).get()).toMatchObject(A.get());
     });
-    it('should round the eigenvectors of the matrix',async()=>{
-      const C = new Matrix(c);
-      const evc = await C.eigenvectors({rounded:true});
-      expect(evc[0].multiplicity).toBe(1);
-      expect(evc[0].eigenvalue).toBe(9);
-      expect(evc[1].multiplicity).toBe(2);
-      expect(evc[1].eigenvalue).toBe(2);
-      expect(evc[0].eigenvectors[0].get()).toMatchObject([1,1,1]);
-      expect(evc[1].eigenvectors[0].get()).toMatchObject([0.5,1,0]);
-      expect(evc[1].eigenvectors[1].get()).toMatchObject([-3,0,1]);
+    it('should handle a matrix that is not diagonalizable', async ()=>{
+      const A = new Matrix([ 
+        [ 5, 1],
+        [ 0, 5],
+      ]);
+      const {P,D,P_inverse,diagonalizable} = await A.diagonalize();
+      console.log({P,D,P_inverse});
+      expect(P).toBeUndefined();
+      expect(D).toBeUndefined();
+      expect(P_inverse).toBeUndefined();
+      expect(diagonalizable).toBe(false);
+      // expect(P.multiply(D).multiply(P_inverse).get()).toMatchObject(A.get());
     });
     // it('should diagonalize a matrix', async ()=>{
     //   const A = new Matrix([

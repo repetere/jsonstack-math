@@ -365,6 +365,18 @@ describe('Matrix',()=>{
       expect(A.multiply(P).get()).toMatchObject(P.multiply(D).get());
       expect(A.multiply(A).get()).toMatchObject(P.multiply(D).multiply(D).multiply(P_inverse).get());
     });
+    it('should handle a matrix that is not diagonalizable', async ()=>{
+      const A = new Matrix([ 
+        [ 5, 1],
+        [ 0, 5],
+      ]);
+      const {P,D,P_inverse,diagonalizable} = await A.diagonalize();
+      console.log({P,D,P_inverse});
+      expect(P).toBeUndefined();
+      expect(D).toBeUndefined();
+      expect(P_inverse).toBeUndefined();
+      expect(diagonalizable).toBe(false);
+    });
   });
   describe('pivots',()=>{
     it('should return the pivots of a 2x2 matrix',()=>{

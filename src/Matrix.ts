@@ -308,6 +308,7 @@ export class Matrix{
     const p_transposed:number[][] = [];
     const eigenvectors = await this.eigenvectors(options);
     const numberOfEigenvectors = eigenvectors.reduce((acc:number,eigenvector:any)=>acc+eigenvector.multiplicity,0);
+    console.log({numberOfEigenvectors,eigenvectors})
     if(numberOfEigenvectors<rows) return {P,D,P_inverse,diagonalizable:false};
     let e=0;
     eigenvectors
