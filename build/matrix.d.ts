@@ -139,6 +139,10 @@ export declare class Matrix {
         iterations?: number;
         rounded?: boolean;
     }): Promise<any>;
+    diagonalize(options?: {
+        iterations?: number;
+        rounded?: boolean;
+    }): Promise<any>;
     /**
      * @description returns the pivot positions of the matrix
      * @returns the pivot positions of the matrix

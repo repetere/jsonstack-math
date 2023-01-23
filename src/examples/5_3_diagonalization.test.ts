@@ -46,10 +46,9 @@ describe('Diagonalization',()=>{
   describe('diagonalize a matrix',()=>{
     it('diagnoalize a matrix', async ()=>{
       // const A = new Matrix([ 
-      //   [ 5, 0, 0, 0],
-      //   [ 0, 5, 0, 0],
-      //   [ 1, 4,-3, 0],
-      //   [-1,-2, 0,-3]
+      //   [ .8,-.6, 0],
+      //   [ .6, .8, 0],
+      //   [  0, 0, 1.07],
       // ]);
       // const {P,D,P_inverse} = await A.diagonalize();
       // console.log('P');
@@ -58,19 +57,6 @@ describe('Diagonalization',()=>{
       // D.elements.print();
       // console.log('P_inverse');
       // P_inverse.elements.print();
-      // expect(P.multiply(D).multiply(P_inverse).get()).toMatchObject(A.get());
-    });
-    it('should handle a matrix that is not diagonalizable', async ()=>{
-      const A = new Matrix([ 
-        [ 5, 1],
-        [ 0, 5],
-      ]);
-      const {P,D,P_inverse,diagonalizable} = await A.diagonalize();
-      console.log({P,D,P_inverse});
-      expect(P).toBeUndefined();
-      expect(D).toBeUndefined();
-      expect(P_inverse).toBeUndefined();
-      expect(diagonalizable).toBe(false);
       // expect(P.multiply(D).multiply(P_inverse).get()).toMatchObject(A.get());
     });
     // it('should diagonalize a matrix', async ()=>{

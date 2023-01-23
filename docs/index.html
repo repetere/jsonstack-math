@@ -16,7 +16,112 @@
 <a href="#jsonstack-math" id="jsonstack-math" style="color: inherit; text-decoration: none;">
   <h1>jsonstack-math</h1>
 </a>
-<p>math, matrix and other helpers</p>
+<p>linear algebra, math, matrix and other helpers</p>
+
+<a href="#jsonstack-math-1" id="jsonstack-math-1" style="color: inherit; text-decoration: none;">
+  <h1>JSONSTACK Math</h1>
+</a>
+<p> <a href="https://coveralls.io/github/repetere/jsonstack-math?branch=main"><img src="https://coveralls.io/repos/github/repetere/jsonstack-math/badge.svg?branch=main" alt="Coverage Status"></a> <a href="https://github.com/repetere/jsonstack-math/actions/workflows/release.yml"><img src="https://github.com/repetere/jsonstack-math/actions/workflows/release.yml/badge.svg" alt="Release"></a></p>
+
+<a href="#description" id="description" style="color: inherit; text-decoration: none;">
+  <h2>Description</h2>
+</a>
+<p><strong>JSONSTACK Math</strong> is a module that ...WIP.</p>
+
+<a href="#jump-right-in" id="jump-right-in" style="color: inherit; text-decoration: none;">
+  <h3>Jump right in</h3>
+</a>
+<p>... is designed so software engineers and machine learning engineers can ...WIP.</p>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h3>Usage</h3>
+</a>
+<p>The idea behind ... WIP.</p>
+
+<a href="#what39s-included" id="what39s-included" style="color: inherit; text-decoration: none;">
+  <h3>What&#39;s included</h3>
+</a>
+<p>...WIP...</p>
+<ul>
+<li>tbd</li>
+<li>tbd</li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code class="language-sh"><span class="hl-0">$ </span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">i</span><span class="hl-0"> </span><span class="hl-1">@jsonstack/math</span>
+</code></pre>
+<link id="viewx-style-style-0" rel="stylesheet" type="text/css" href="https://unpkg.com/highlight.js@9.18.1/styles/darkula.css">
+
+<hr>
+
+<a href="#jsonstack-math-manual" id="jsonstack-math-manual" style="color: inherit; text-decoration: none;">
+  <h3>jsonstack-math Manual</h3>
+</a>
+<ul>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/getting-started/index.html">Getting Started</a></li>
+<li>Working With Data<ul>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/data-fetching/index.html">Data Fetching</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/feature-engineering/index.html">Feature Engineering</a></li>
+</ul>
+</li>
+<li>Working With Models<ul>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/model-training/index.html">Model Training</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/model-evaluation/index.html">Model Evaluation</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/model-predictions/index.html">Model Predictions</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/saving-and-loading-models/index.html">Saving and Loading Models</a></li>
+</ul>
+</li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/advanced-topics/index.html">Advanced Topics</a><ul>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/spec/index.html">jsonstack-math &amp; JML Spec</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/manual/examples/index.html">Examples</a></li>
+<li><a href="https://repetere.github.io/jsonstack-math/">Full API Docs</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
+  <h3>Basic Usage</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> </span><span class="hl-3">*</span><span class="hl-0"> </span><span class="hl-2">as</span><span class="hl-0"> </span><span class="hl-4">tf</span><span class="hl-0"> </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;@tensorflow/tfjs-node&#39;</span><span class="hl-0">;</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-4">getModel</span><span class="hl-0">, </span><span class="hl-4">setBackend</span><span class="hl-0">, } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;@jsonstack/jsonstack-math&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-5">//set tensorflow</span><br/><span class="hl-6">setBackend</span><span class="hl-0">(</span><span class="hl-4">tf</span><span class="hl-0">);</span><br/><br/><span class="hl-5">//Iris Dataset e.g from https://raw.githubusercontent.com/repetere/modelx-model/master/src/test/mock/data/iris_data.csv</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">type</span><span class="hl-0"> = </span><span class="hl-1">&#39;ai-classification&#39;</span><span class="hl-0">;</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">dataset</span><span class="hl-0"> = [</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">5.1</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">3.5</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">1.4</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">0.2</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;plant&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;Iris-setosa&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-5">//  ...</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">7.0</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">3.2</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">4.7</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">1.4</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;plant&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;Iris-versicolor&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-5">// ...</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">5.9</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;sepal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">3.0</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_length_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">5.1</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;petal_width_cm&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-8">1.8</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;plant&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;virginica&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">]</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">inputs</span><span class="hl-0"> = [</span><span class="hl-1">&#39;sepal_length_cm&#39;</span><span class="hl-0">,</span><span class="hl-1">&#39;sepal_width_cm&#39;</span><span class="hl-0">,</span><span class="hl-1">&#39;petal_length_cm&#39;</span><span class="hl-0">,</span><span class="hl-1">&#39;petal_width_cm&#39;</span><span class="hl-0">, ];</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">outputs</span><span class="hl-0"> = [ </span><span class="hl-1">&#39;plant&#39;</span><span class="hl-0">,];</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-6">on_progress</span><span class="hl-0"> = ({ </span><span class="hl-4">completion_percentage</span><span class="hl-0">, </span><span class="hl-4">loss</span><span class="hl-0">, </span><span class="hl-4">epoch</span><span class="hl-0">, </span><span class="hl-4">status</span><span class="hl-0">, </span><span class="hl-4">logs</span><span class="hl-0">, </span><span class="hl-4">defaultLog</span><span class="hl-0">, }) </span><span class="hl-3">=&gt;</span><span class="hl-0"> { </span><br/><span class="hl-0">  </span><span class="hl-4">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">({ </span><span class="hl-4">completion_percentage</span><span class="hl-0">, </span><span class="hl-4">loss</span><span class="hl-0">, </span><span class="hl-4">epoch</span><span class="hl-0">, </span><span class="hl-4">status</span><span class="hl-0">, </span><span class="hl-4">logs</span><span class="hl-0">, </span><span class="hl-4">defaultLog</span><span class="hl-0">, });</span><br/><span class="hl-0">}</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">IrisModel</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-6">getModel</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-4">type</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">dataset</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">inputs</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">outputs</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">on_progress</span><span class="hl-0">,</span><br/><span class="hl-0">}); </span><br/><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-4">IrisModel</span><span class="hl-0">.</span><span class="hl-6">trainModel</span><span class="hl-0">()</span><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-7">predictions</span><span class="hl-0"> = </span><span class="hl-2">await</span><span class="hl-0"> </span><span class="hl-4">IrisModel</span><span class="hl-0">.</span><span class="hl-6">predictModel</span><span class="hl-0">({ </span><br/><span class="hl-0">  </span><span class="hl-4">prediction_inputs:</span><span class="hl-0">[</span><br/><span class="hl-0">    { </span><span class="hl-4">sepal_length_cm:</span><span class="hl-0"> </span><span class="hl-8">5.1</span><span class="hl-0">, </span><span class="hl-4">sepal_width_cm:</span><span class="hl-0"> </span><span class="hl-8">3.5</span><span class="hl-0">, </span><span class="hl-4">petal_length_cm:</span><span class="hl-0"> </span><span class="hl-8">1.4</span><span class="hl-0">, </span><span class="hl-4">petal_width_cm:</span><span class="hl-0"> </span><span class="hl-8">0.2</span><span class="hl-0">, },</span><br/><span class="hl-0">    { </span><span class="hl-4">sepal_length_cm:</span><span class="hl-0"> </span><span class="hl-8">5.9</span><span class="hl-0">, </span><span class="hl-4">sepal_width_cm:</span><span class="hl-0"> </span><span class="hl-8">3.0</span><span class="hl-0">, </span><span class="hl-4">petal_length_cm:</span><span class="hl-0"> </span><span class="hl-8">5.1</span><span class="hl-0">, </span><span class="hl-4">petal_width_cm:</span><span class="hl-0"> </span><span class="hl-8">1.8</span><span class="hl-0">, },</span><br/><span class="hl-0">  ],</span><br/><span class="hl-0">}); </span><span class="hl-5">// =&gt; [ { plant:&#39;Iris-setosa&#39; }, { plant:&#39;Iris-virginica&#39; }, ]</span><br/>
+</code></pre>
+
+<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+  <h2>Example</h2>
+</a>
+<iframe width="100%" height="500" src="https://jsfiddle.net/yawetse/4ph1vwes/21/embedded/result,js,html,css,resources/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h3>Development</h3>
+</a>
+<p>Note <em>Make sure you have typescript installed</em></p>
+<pre><code class="language-sh"><span class="hl-0">$ </span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">i</span><span class="hl-0"> </span><span class="hl-1">-g</span><span class="hl-0"> </span><span class="hl-1">typescript</span><span class="hl-0"> </span>
+</code></pre>
+<p>For generating documentation</p>
+<pre><code class="language-sh"><span class="hl-0">$ </span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">run</span><span class="hl-0"> </span><span class="hl-1">doc</span>
+</code></pre>
+
+<a href="#notes" id="notes" style="color: inherit; text-decoration: none;">
+  <h3>Notes</h3>
+</a>
+<p>Check out <a href="https://repetere.github.io/jsonstack-math/">https://repetere.github.io/jsonstack-math/</a> for the full jsonstack-math Documentation</p>
+
+<a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
+  <h3>Testing</h3>
+</a>
+<pre><code class="language-sh"><span class="hl-0">$ </span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">test</span>
+</code></pre>
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h3>Contributing</h3>
+</a>
+<p>Fork, write tests and create a pull request!</p>
+<p>License</p>
+<hr>
+<p>MIT</p>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">

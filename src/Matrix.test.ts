@@ -371,7 +371,7 @@ describe('Matrix',()=>{
         [ 0, 5],
       ]);
       const {P,D,P_inverse,diagonalizable} = await A.diagonalize();
-      console.log({P,D,P_inverse});
+      // console.log({P,D,P_inverse});
       expect(P).toBeUndefined();
       expect(D).toBeUndefined();
       expect(P_inverse).toBeUndefined();

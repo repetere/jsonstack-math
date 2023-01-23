@@ -288,12 +288,50 @@ export class Matrix {
         return eigenvectors.map(({ eigenvalue, eigenvectors }) => {
             const { vector, ...vectors } = eigenvectors;
             const evs = Object.values(vectors);
+            const evectors = evs
+                .map((ev) => ev.length
+                ? new Vector(ev)
+                : undefined)
+                .filter((ev) => ev);
             return {
                 eigenvalue,
-                eigenvectors: evs.map((ev) => new Vector(ev)),
-                multiplicity: evs.length
+                eigenvectors: evectors,
+                multiplicity: evectors.length
             };
         });
+    }
+    async diagonalize(options = { iterations: 1000, rounded: true }) {
+        let D = undefined;
+        let P = undefined;
+        let P_inverse = undefined;
+        let diagonalizable = true;
+        const { rows, columns } = this.properties;
+        const d = Matrix.zeros(rows, columns).get();
+        const p_transposed = [];
+        const eigenvectors = await this.eigenvectors(options);
+        const numberOfEigenvectors = eigenvectors.reduce((acc, eigenvector) => acc + eigenvector.multiplicity, 0);
+        console.log({ numberOfEigenvectors, eigenvectors });
+        if (numberOfEigenvectors < rows)
+            return { P, D, P_inverse, diagonalizable: false };
+        let e = 0;
+        eigenvectors
+            .sort((a, b) => b.eigenvalue - a.eigenvalue)
+            .forEach((eigen) => {
+            const { eigenvalue, eigenvectors, multiplicity } = eigen;
+            for (let i = 0; i < multiplicity; i++) {
+                d[e][e] = eigenvalue;
+                const ev = eigenvectors[i].get();
+                p_transposed.push(ev);
+                e++;
+            }
+        });
+        P = new Matrix(p_transposed).transpose();
+        const p_rref = P.rref();
+        if (p_rref.pivots.length < columns)
+            return { P, D, P_inverse, diagonalizable: false };
+        P_inverse = P.inverse;
+        D = new Matrix(d);
+        return { P, D, P_inverse, diagonalizable };
     }
     /**
      * @description returns the pivot positions of the matrix
@@ -334,15 +372,8 @@ export class Matrix {
             return undefined;
         const augmentedMatrix = this.augment(Matrix.identity(rows));
         const rref = augmentedMatrix.rref();
-        const inverseRows = [];
-        rref.elements.transpose().unstack().forEach((tensor, i) => {
-            if (i >= columns)
-                inverseRows.push(tensor);
-        });
-        const inverseTensor = (rows === 2) ? tf.stack(inverseRows).transpose() : tf.stack(inverseRows);
-        return new Matrix(inverseTensor);
-        // const inverse = rref.column(columns,columns);
-        // return inverse;
+        const [I, A_inv] = tf.split(rref.elements, 2, 1);
+        return new Matrix(A_inv);
     }
     /**
      * @description returns the matrix
