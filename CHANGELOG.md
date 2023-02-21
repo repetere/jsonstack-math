@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/repetere/jsonstack-math/compare/v1.16.1...v1.17.0) (2023-02-21)
+
+
+### Features
+
+* adding vector distance ([b8cc458](https://github.com/repetere/jsonstack-math/commit/b8cc4589dd99dab2514014af887d50fbb4686d92))
+
 ## [1.16.1](https://github.com/repetere/jsonstack-math/compare/v1.16.0...v1.16.1) (2023-01-22)
 
 
