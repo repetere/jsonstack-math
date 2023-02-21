@@ -32,6 +32,10 @@ describe('Vector',()=>{
       const v = new Vector([1,2,3]);
       const w = v.subtract([1,1,1]);
       expect(w.get()).toEqual([0,1,2]);
+      
+      const a = new Vector([4,5,6]);
+      const b = a.subtract(new Vector([1,1,1]));
+      expect(b.get()).toEqual([3,4,5]);
     });
     it('should throw an error if vectors are not the same length',()=>{
       const v = new Vector([1,2,3]);
@@ -221,6 +225,29 @@ describe('Vector',()=>{
       expect(Vector.hstack(v,v2).get()).toEqual([1,2,3,4,5,6]);
     });
   });
+  describe('distanceTo',()=>{ 
+    it('should return the distance between two vectors',()=>{
+      const v_1 = new Vector([1,2,3]);
+      const v_2 = new Vector([1,2,3]);
+      const v_3 = new Vector([1,2,4]);
+      expect(v_1.distanceTo(v_2)).toEqual(0);
+      expect(v_1.distanceTo(v_3)).toEqual(1);
+    });
+    it('should return the distance between two vectors',()=>{
+      const u = new Vector([7,1]);
+      const v = new Vector([3,2]);
+      const u_dist_v = u.distanceTo(v);
+      expect(u_dist_v).toBeCloseTo(Math.sqrt(17));
+    });
+  });
+  describe('print',()=>{
+    it('should print the vector',()=>{
+      const v = new Vector([1,2,3]);
+      v.components.print = jest.fn();
+      v.print();
+      expect(v.components.print).toHaveBeenCalled();
+    });
+  })
   describe('get',()=>{
     it('should return the components of the vector',()=>{
       const v = new Vector([1,2,3]);

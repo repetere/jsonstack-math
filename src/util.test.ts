@@ -53,6 +53,31 @@ describe('util', function () {
     it('should return the sum of the input array', () => {
       expect(util.sum([1, 2, 3, 4])).toBe(10);
       expect(util.sum([1, 2, 3, 4, 5])).toBe(15);
+      
+      let rounding_preference ='none';
+      let birth_rate_in_seconds=7;
+      let date_rate_in_seconds=13;
+      let immigration_rate_in_seconds=45;
+      let current_year=2023;
+      let current_population= 312032543;
+      let seconds_per_year= 31536000;
+      let projection_in_years= 5
+
+      let births_per_year= seconds_per_year/birth_rate_in_seconds;
+      let deaths_per_year= seconds_per_year/date_rate_in_seconds;
+      let immigrants_per_year= seconds_per_year/immigration_rate_in_seconds;
+      births_per_year = Math.round(births_per_year)
+      deaths_per_year = Math.round(deaths_per_year)
+      immigrants_per_year = Math.round(immigrants_per_year)
+      let net_population_change_per_year = (births_per_year+immigrants_per_year)-deaths_per_year;
+
+      console.log({births_per_year,deaths_per_year,immigrants_per_year,net_population_change_per_year})
+
+      console.log(`Year ${current_year} population is ${current_population}`)
+      for(let i=0;i<projection_in_years;i++){
+        current_population+=net_population_change_per_year;
+        console.log(`Year ${current_year+i} population is ${current_population}`)
+      }
     });
   });
 });

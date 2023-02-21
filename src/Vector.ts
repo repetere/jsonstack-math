@@ -84,7 +84,8 @@ export class Vector{
    * @param components 
    * @returns a new vector that is the current vector minus the vector passed in as an argument 
    */
-  subtract(components:number[]):Vector{
+  subtract(components:number[]|Vector):Vector{
+    if(components instanceof Vector) return new Vector(this.components.sub(components.components));
     return new Vector(this.components.sub(tf.tensor1d(components)));
   }
   /**
@@ -221,7 +222,23 @@ export class Vector{
     const vectorMatrix = this.components.reshape([ 1, matrixRows ]);
     return new Vector(vectorMatrix.matMul(matrix.elements).reshape([ matrixRows ]));
   }
-  
+  /**
+   * @description returns the distance between the current vector and the vector passed in as an argument 
+   * @param vector 
+   * @returns the distance between the current vector and the vector passed in as an argument
+   */
+  distanceTo(vector:Vector):number{
+    return this.subtract(vector).length();
+  }
+  /**
+   * prints the components of the vector to the console
+   * @example 
+   * const vector = new Vector([1,2,3])
+   * vector.print() // prints [1,2,3] to the console
+   */
+  print(){
+    this.components.print();
+  }
   /**
    * @description returns the components of the vector as an array
    * @returns the components of the vector as an array
