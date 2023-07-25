@@ -54,7 +54,7 @@
     "puppeteer": "20.9.0",
     "sitedown": "^5.0.3",
     "ts-jest": "29.1.1",
-    "tslib": "2.6.0",
+    "tslib": "2.6.1",
     "typedoc": "0.24.8",
     "typescript": "5.1.6"
   },
