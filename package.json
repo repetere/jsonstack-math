@@ -47,7 +47,7 @@
     "@tensorflow/tfjs-node": "4.11.0",
     "@types/jest": "29.5.5",
     "coveralls": "^3.1.1",
-    "esbuild": "0.19.4",
+    "esbuild": "0.19.5",
     "esbuild-node-builtins": "0.1.0",
     "husky": "8.0.3",
     "jest": "29.7.0",
