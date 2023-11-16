@@ -35,7 +35,7 @@
     "coverage": "coveralls"
   },
   "devDependencies": {
-    "@commitlint/cli": "18.4.1",
+    "@commitlint/cli": "18.4.2",
     "@commitlint/config-conventional": "18.4.0",
     "@geut/esbuild-plugin-brode": "2.0.14",
     "@semantic-release/changelog": "6.0.3",
