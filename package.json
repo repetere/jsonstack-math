@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "18.4.2",
-    "@commitlint/config-conventional": "18.4.2",
+    "@commitlint/config-conventional": "18.4.3",
     "@geut/esbuild-plugin-brode": "2.0.14",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "11.1.0",
