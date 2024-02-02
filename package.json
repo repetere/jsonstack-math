@@ -45,7 +45,7 @@
     "@semantic-release/release-notes-generator": "12.1.0",
     "@tensorflow/tfjs": "4.17.0",
     "@tensorflow/tfjs-node": "4.17.0",
-    "@types/jest": "29.5.11",
+    "@types/jest": "29.5.12",
     "coveralls": "^3.1.1",
     "esbuild": "0.20.0",
     "esbuild-node-builtins": "0.1.0",
